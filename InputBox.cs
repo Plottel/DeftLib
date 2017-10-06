@@ -29,6 +29,13 @@ namespace DeftLib
             _text = "";
         }
 
+        public override void MoveBy(Vector2 amt)
+        {
+            base.MoveBy(amt);
+
+            _stringRect.Location += amt.ToPoint();
+        }
+
         public override void OnGUIEvent()
         {
             if (Input.LeftMousePressed())

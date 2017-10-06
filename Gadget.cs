@@ -23,6 +23,9 @@ namespace DeftLib
             GUIEventHub.Subscribe(this);
         }
 
+        public virtual void MoveBy(Vector2 amt)
+            => pos += amt;
+
         public abstract void OnGUIEvent();
         public abstract void Render(SpriteBatch spriteBatch);
     }

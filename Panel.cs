@@ -46,12 +46,15 @@ namespace DeftLib
             return _gadgets.Find(g => g.label == label) as T;
         }
 
-        public void MoveBy(Vector2 amt)
+        public override void MoveBy(Vector2 amt)
         {
-            pos += amt;
+            base.MoveBy(amt);
 
             _dragRect.X += (int)amt.X;
             _dragRect.Y += (int)amt.Y;
+
+            foreach (var g in _gadgets)
+                g.MoveBy(amt);
         }
 
         public override void OnGUIEvent()
