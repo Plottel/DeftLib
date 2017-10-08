@@ -42,6 +42,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="ColorPanel.cs" />
+    <Compile Include="ComponentPanel.cs" />
     <Compile Include="Deft.cs" />
     <Compile Include="GUIEventHub.cs" />
     <Compile Include="ExtensionMethods.cs" />
@@ -53,12 +54,16 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="InputBox.cs" />
+    <Compile Include="RectanglePanel.cs" />
     <Compile Include="RectComponent.cs" />
     <Compile Include="RectComponentPanel.cs" />
     <Compile Include="StringBox.cs" />
+    <Compile Include="TestIntComponent.cs" />
+    <Compile Include="VectorPanel.cs" />
     <Compile Include="World.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="MonoGame.Extended, Version=0.6.568.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MonoGame.Extended.0.6.568\lib\portable-net45+win8+wpa81\MonoGame.Extended.dll</HintPath>
     </Reference>

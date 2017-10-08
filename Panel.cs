@@ -11,17 +11,18 @@ namespace DeftLib
 {
     public class Panel : Gadget
     {
+        // TODO: Make private
         private Rectangle _dragRect;
         private bool _isBeingDragged;
         private Point _dragPoint;
         private List<Gadget> _gadgets;
         private Vector2 _nextGadgetAt;
 
-        private const int PADDING_BETWEEN_GADGETS = 5;
+        private const int PADDING_BETWEEN_GADGETS = 0;
 
         public Panel(string label, Vector2 pos, Vector2 size) : base(label, pos, size)
         {
-            _nextGadgetAt = pos + new Vector2(5, 35);
+            _nextGadgetAt = pos + new Vector2(20, 35);
 
 
             Vector2 labelSize = Deft.Font14.MeasureString(label);
@@ -39,6 +40,9 @@ namespace DeftLib
             _gadgets.Add(newGadget);
 
             _nextGadgetAt = _nextGadgetAt.AddY((int)newGadget.size.Y + PADDING_BETWEEN_GADGETS);
+
+            if (_nextGadgetAt.Y > pos.Y + size.Y)
+                size.Y = _nextGadgetAt.Y - pos.Y; 
         }
 
         public T GetGadget<T>(string label) where T : Gadget
@@ -83,8 +87,6 @@ namespace DeftLib
         {
             spriteBatch.FillRectangle(pos, size, Color.LightGray);
             spriteBatch.DrawString(Deft.Font14, label, pos.Add(5), Color.Black);
-
-            spriteBatch.DrawRectangle(_dragRect, Color.Black, 3);
 
             foreach (var g in _gadgets)
                 g.Render(spriteBatch);

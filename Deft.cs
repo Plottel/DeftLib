@@ -77,11 +77,6 @@ namespace DeftLib
             spriteBatch.Begin();
 
             {
-                spriteBatch.DrawString(Font10, "Hello HOW is it going?", new Vector2(100, 100), Color.Black);
-                spriteBatch.DrawString(Font12, "Hello HOW is it going?", new Vector2(100, 150), Color.Black);
-                spriteBatch.DrawString(Font14, "Hello HOW is it going?", new Vector2(100, 200), Color.Black);
-                spriteBatch.DrawString(Font16, "Hello HOW is it going?", new Vector2(100, 250), Color.Black);
-
                 _world.Render(spriteBatch);
             }
 

@@ -10,6 +10,17 @@ namespace DeftLib
 {
     public abstract class Gadget : GUIEventListener
     {
+        public static Dictionary<Type, Type> gadgetTypeMap = 
+            new Dictionary<Type, Type>();
+
+        static Gadget()
+        {
+            gadgetTypeMap[typeof(int)] = typeof(IntBox);
+            gadgetTypeMap[typeof(Color)] = typeof(ColorPanel);
+            gadgetTypeMap[typeof(Rectangle)] = typeof(RectanglePanel);
+            gadgetTypeMap[typeof(Vector2)] = typeof(VectorPanel);
+        }
+
         public Vector2 pos;
         public Vector2 size;
         public string label;

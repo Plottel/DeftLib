@@ -13,15 +13,22 @@ namespace DeftLib
     {
         private List<Gadget> _gadgets = new List<Gadget>();
         private RectComponent r;
+        ComponentPanel<TestIntComponent> testPanel;
+        TestIntComponent testComp;
 
         public World()
         {
-            r = new RectComponent();
-            _gadgets.Add(new RectComponentPanel("Rectangle Editor", new Vector2(300, 200)));
+            testComp = new TestIntComponent();
+            testPanel = new ComponentPanel<TestIntComponent>("RECTANGLE COMPONENT", new Vector2(50, 50), new Vector2(300, 50));
+            testPanel.editing = testComp;
 
-            RectComponentPanel rep = _gadgets[0] as RectComponentPanel;
 
-            rep.editing = r;
+            //r = new RectComponent();
+            //_gadgets.Add(new RectComponentPanel("Rectangle Editor", new Vector2(300, 200)));
+
+            //RectComponentPanel rep = _gadgets[0] as RectComponentPanel;
+
+            //rep.editing = r;
         }
 
         public void Update(GameTime gameTime)
@@ -34,12 +41,13 @@ namespace DeftLib
             foreach (var g in _gadgets)
                 g.Render(spriteBatch);
 
-            spriteBatch.DrawString(Deft.Font12, "X " + r.rect.X.ToString(), new Vector2(700, 50), Color.Black);
-            spriteBatch.DrawString(Deft.Font12, "Y " + r.rect.Y.ToString(), new Vector2(700, 80), Color.Black);
-            spriteBatch.DrawString(Deft.Font12, "W " + r.rect.Width.ToString(), new Vector2(700, 110), Color.Black);
-            spriteBatch.DrawString(Deft.Font12, "H " + r.rect.Height.ToString(), new Vector2(700, 140), Color.Black);
 
-            spriteBatch.FillRectangle(r.rect, r.color);
+            testPanel.Render(spriteBatch);
+
+            //spriteBatch.FillRectangle(new Rectangle(testComp.x, testComp.y, testComp.w, testComp.h), Color.Blue);
+            spriteBatch.FillRectangle(testComp.rect, testComp.color);
+
+            //spriteBatch.FillRectangle(r.rect, r.color);
         }
     }
 }
