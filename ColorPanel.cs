@@ -12,6 +12,10 @@ namespace DeftLib
         public static Vector2 DEFAULT_SIZE = new Vector2(200, 140);
         public Color editing;
 
+        // Default constructor for Reflection instantiation
+        public ColorPanel() : this("", Vector2.Zero, DEFAULT_SIZE)
+        { }
+
         public ColorPanel(string label, Vector2 pos) : this(label, pos, DEFAULT_SIZE)
         { }
 

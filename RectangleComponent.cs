@@ -7,8 +7,9 @@ using Microsoft.Xna.Framework;
 
 namespace DeftLib
 {
-    public class TestIntComponent : Component
+    public class RectangleComponent : Component
     {
-        public int a, b, c, d, e, f, g;
+        public Rectangle rect;
+        public Color color;
     }
 }

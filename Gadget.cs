@@ -13,17 +13,23 @@ namespace DeftLib
         public static Dictionary<Type, Type> gadgetTypeMap = 
             new Dictionary<Type, Type>();
 
+        public bool isSelected = false;
+
         static Gadget()
         {
             gadgetTypeMap[typeof(int)] = typeof(IntBox);
             gadgetTypeMap[typeof(Color)] = typeof(ColorPanel);
-            gadgetTypeMap[typeof(Rectangle)] = typeof(RectanglePanel);
             gadgetTypeMap[typeof(Vector2)] = typeof(VectorPanel);
+            gadgetTypeMap[typeof(Rectangle)] = typeof(RectanglePanel);
         }
 
         public Vector2 pos;
         public Vector2 size;
         public string label;
+
+        // Default constructor for Reflection instantiation
+        public Gadget() : this("", Vector2.Zero, Vector2.Zero)
+        { }
 
         public Gadget(string label, Vector2 pos, Vector2 size)
         {
@@ -33,6 +39,9 @@ namespace DeftLib
 
             GUIEventHub.Subscribe(this);
         }
+
+        public virtual void MoveTo(Vector2 newPos)
+            => pos = newPos;
 
         public virtual void MoveBy(Vector2 amt)
             => pos += amt;

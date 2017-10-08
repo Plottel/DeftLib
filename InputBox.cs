@@ -17,6 +17,10 @@ namespace DeftLib
 
         protected string _text;
 
+        // Default constructor for Reflection instantiation
+        public InputBox() : this("", Vector2.Zero, Vector2.Zero)
+        { }
+
         public InputBox(string label, Vector2 pos, Vector2 size) : base(label, pos, size)
         {
             _stringRect = Rectangle.Empty;
@@ -27,6 +31,14 @@ namespace DeftLib
 
             _isTyping = false;
             _text = "";
+        }
+
+        public override void MoveTo(Vector2 newPos)
+        {
+            base.MoveTo(newPos);
+
+            _stringRect.X = (int)(newPos.X + size.X - _stringRect.Width - 5);
+            _stringRect.Y = (int)(newPos.Y + 5);
         }
 
         public override void MoveBy(Vector2 amt)
@@ -58,8 +70,14 @@ namespace DeftLib
 
         public override void Render(SpriteBatch spriteBatch)
         {
-            spriteBatch.DrawString(Deft.Font10, label, pos.Add(5), Color.Black);
             spriteBatch.DrawRectangle(_stringRect, Color.Black, 1);
+
+            if (_isTyping)
+                spriteBatch.DrawRectangle(_stringRect, Color.Blue, 2);
+
+
+
+            spriteBatch.DrawString(Deft.Font10, label, pos.Add(5), Color.Black);
             spriteBatch.DrawString(Deft.Font10, _text, _stringRect.Location.ToVector2().Add(3), Color.Black);
         }
     }

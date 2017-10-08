@@ -11,6 +11,10 @@ namespace DeftLib
     {
         public static Vector2 DEFAULT_SIZE = new Vector2(200, 30);
 
+        // Default constructor for Reflection instantiation
+        public StringBox() : this("", Vector2.Zero, DEFAULT_SIZE)
+        { }
+
         public StringBox(string label, Vector2 pos) : this(label, pos, DEFAULT_SIZE)
         { }
 

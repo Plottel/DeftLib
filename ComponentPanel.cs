@@ -10,7 +10,16 @@ namespace DeftLib
 {
     public class ComponentPanel<T> : Panel
     {
-        public T editing;
+        public T editing = (T)Activator.CreateInstance(typeof(T));
+
+        public T Value
+        {
+            get { return editing; }
+        }
+
+        // Default constructor for Reflection instantiation
+        public ComponentPanel() : this("", Vector2.Zero, Vector2.Zero)
+        { }
 
         public ComponentPanel(string label, Vector2 pos, Vector2 size) : base(label, pos, size)
         {

@@ -12,23 +12,19 @@ namespace DeftLib
     public class World
     {
         private List<Gadget> _gadgets = new List<Gadget>();
-        private RectComponent r;
-        ComponentPanel<TestIntComponent> testPanel;
-        TestIntComponent testComp;
+        EntityPanel entityPanel;
+        Entity e;
 
         public World()
         {
-            testComp = new TestIntComponent();
-            testPanel = new ComponentPanel<TestIntComponent>("RECTANGLE COMPONENT", new Vector2(50, 50), new Vector2(300, 50));
-            testPanel.editing = testComp;
+            entityPanel = new EntityPanel("Entity Editor", new Vector2(10, 10), new Vector2(400, 200));
 
+            e = new Entity();
+            e.AddComponent<MovementComponent>(new MovementComponent());
+            e.AddComponent<TestIntComponent>(new TestIntComponent());
+            e.AddComponent<RectangleComponent>(new RectangleComponent());
 
-            //r = new RectComponent();
-            //_gadgets.Add(new RectComponentPanel("Rectangle Editor", new Vector2(300, 200)));
-
-            //RectComponentPanel rep = _gadgets[0] as RectComponentPanel;
-
-            //rep.editing = r;
+            entityPanel.SetEntity(e);
         }
 
         public void Update(GameTime gameTime)
@@ -42,12 +38,7 @@ namespace DeftLib
                 g.Render(spriteBatch);
 
 
-            testPanel.Render(spriteBatch);
-
-            //spriteBatch.FillRectangle(new Rectangle(testComp.x, testComp.y, testComp.w, testComp.h), Color.Blue);
-            spriteBatch.FillRectangle(testComp.rect, testComp.color);
-
-            //spriteBatch.FillRectangle(r.rect, r.color);
+            entityPanel.Render(spriteBatch); // Didn't add it to gadget list.
         }
     }
 }

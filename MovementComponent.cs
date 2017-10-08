@@ -7,9 +7,9 @@ using Microsoft.Xna.Framework;
 
 namespace DeftLib
 {
-    public class RectComponent
+    public class MovementComponent : Component
     {
-        public Rectangle rect;
-        public Color color;
+        public Vector2 velocity;
+        public int acceleration;
     }
 }

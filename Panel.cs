@@ -20,10 +20,13 @@ namespace DeftLib
 
         private const int PADDING_BETWEEN_GADGETS = 0;
 
+        // Default constructor for Reflection instantiation
+        public Panel() : this("", Vector2.Zero, Vector2.Zero)
+        { }
+
         public Panel(string label, Vector2 pos, Vector2 size) : base(label, pos, size)
         {
-            _nextGadgetAt = pos + new Vector2(20, 35);
-
+            _nextGadgetAt = new Vector2(20, 35);
 
             Vector2 labelSize = Deft.Font14.MeasureString(label);
             labelSize.X = size.X;
@@ -34,20 +37,40 @@ namespace DeftLib
             _gadgets = new List<Gadget>();
         }
 
+        public void ClearGadgets()
+        {
+            _gadgets.Clear();
+        }
+
         public void AddGadget<T>(string label) where T : Gadget
         {
-            T newGadget = (T)Activator.CreateInstance(typeof(T), label, _nextGadgetAt);
+            T newGadget = (T)Activator.CreateInstance(typeof(T));
+            newGadget.label = label;
+            newGadget.MoveTo(pos + _nextGadgetAt);
+
             _gadgets.Add(newGadget);
 
-            _nextGadgetAt = _nextGadgetAt.AddY((int)newGadget.size.Y + PADDING_BETWEEN_GADGETS);
+            _nextGadgetAt.Y += newGadget.size.Y + PADDING_BETWEEN_GADGETS;
 
             if (_nextGadgetAt.Y > pos.Y + size.Y)
-                size.Y = _nextGadgetAt.Y - pos.Y; 
+                size.Y = _nextGadgetAt.Y - pos.Y + 10; 
         }
 
         public T GetGadget<T>(string label) where T : Gadget
         {
             return _gadgets.Find(g => g.label == label) as T;
+        }
+
+        public override void MoveTo(Vector2 newPos)
+        {
+            foreach (var g in _gadgets)
+                g.MoveTo(g.pos + (newPos - pos));
+
+
+            base.MoveTo(newPos);
+
+            _dragRect.X = (int)newPos.X;
+            _dragRect.Y = (int)newPos.Y;
         }
 
         public override void MoveBy(Vector2 amt)
