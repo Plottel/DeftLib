@@ -72,11 +72,6 @@ namespace DeftLib
         {
             spriteBatch.DrawRectangle(_stringRect, Color.Black, 1);
 
-            if (_isTyping)
-                spriteBatch.DrawRectangle(_stringRect, Color.Blue, 2);
-
-
-
             spriteBatch.DrawString(Deft.Font10, label, pos.Add(5), Color.Black);
             spriteBatch.DrawString(Deft.Font10, _text, _stringRect.Location.ToVector2().Add(3), Color.Black);
         }

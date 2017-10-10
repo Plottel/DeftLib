@@ -27,6 +27,11 @@ namespace DeftLib
         public Vector2 size;
         public string label;
 
+        public Rectangle Bounds
+        {
+            get { return new Rectangle(pos.ToPoint(), size.ToPoint()); }
+        }
+
         // Default constructor for Reflection instantiation
         public Gadget() : this("", Vector2.Zero, Vector2.Zero)
         { }

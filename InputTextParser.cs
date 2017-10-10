@@ -30,6 +30,8 @@ namespace DeftLib
                     case Keys.Space: result += " "; break;
                     case Keys.OemPeriod: result += "."; break;
                     case Keys.Back: break;
+                    case Keys.Tab: break;
+                    case Keys.Insert: break;
 
                     default: result += key.ToString(); break;
                 }

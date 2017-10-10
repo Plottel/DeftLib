@@ -18,6 +18,11 @@ namespace DeftLib
         private List<Gadget> _gadgets;
         private Vector2 _nextGadgetAt;
 
+        public List<Gadget> Gadgets
+        {
+            get { return _gadgets; }
+        }
+
         private const int PADDING_BETWEEN_GADGETS = 0;
 
         // Default constructor for Reflection instantiation

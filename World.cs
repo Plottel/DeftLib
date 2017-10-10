@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using MonoGame.Extended;
 
 namespace DeftLib
@@ -12,6 +13,8 @@ namespace DeftLib
     public class World
     {
         private List<Gadget> _gadgets = new List<Gadget>();
+
+
         EntityPanel entityPanel;
         Entity e;
 
@@ -25,6 +28,7 @@ namespace DeftLib
             e.AddComponent<RectangleComponent>(new RectangleComponent());
 
             entityPanel.SetEntity(e);
+            _gadgets.Add(entityPanel);
         }
 
         public void Update(GameTime gameTime)
@@ -37,8 +41,10 @@ namespace DeftLib
             foreach (var g in _gadgets)
                 g.Render(spriteBatch);
 
+            Gadget active = GUIEventHub.ActiveListener as Gadget;
 
-            entityPanel.Render(spriteBatch); // Didn't add it to gadget list.
+            if (active != null)
+                spriteBatch.DrawRectangle(active.pos, active.size, Color.Blue, 2);
         }
     }
 }
