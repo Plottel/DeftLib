@@ -47,6 +47,7 @@
     <Compile Include="Deft.cs" />
     <Compile Include="Entity.cs" />
     <Compile Include="EntityPanel.cs" />
+    <Compile Include="EntitySystem.cs" />
     <Compile Include="GUIEventHub.cs" />
     <Compile Include="ExtensionMethods.cs" />
     <Compile Include="Gadget.cs" />
@@ -60,6 +61,8 @@
     <Compile Include="InputBox.cs" />
     <Compile Include="RectanglePanel.cs" />
     <Compile Include="RectangleComponent.cs" />
+    <Compile Include="RectangleRenderingSystem.cs" />
+    <Compile Include="SpatialComponent.cs" />
     <Compile Include="StringBox.cs" />
     <Compile Include="TestIntComponent.cs" />
     <Compile Include="VectorPanel.cs" />

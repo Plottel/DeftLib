@@ -8,34 +8,34 @@ namespace DeftLib
 {
     public class Entity
     {
-        private Dictionary<Type, Component> _components = new Dictionary<Type, Component>();
+        private Dictionary<Type, IComponent> _components = new Dictionary<Type, IComponent>();
 
-        public T GetComponent<T>() where T : Component
+        public T GetComponent<T>() where T : IComponent
         {
             var type = typeof(T);
 
             if (_components.ContainsKey(type))
                 return (T)_components[type];
-            return null;
+            return default(T);
         }
 
-        public void ReplaceComponent(Component component)
+        public void ReplaceComponent(IComponent component)
         {
             if (_components.ContainsKey(component.GetType()))
                 _components[component.GetType()] = component;
         }
 
-        public void AddComponent<T>(Component component)
+        public void AddComponent<T>(IComponent component)
         {
             _components.Add(typeof(T), component);
         }
 
-        public Dictionary<Type, Component> ComponentMap
+        public Dictionary<Type, IComponent> ComponentMap
         {
             get { return _components; }
         }
 
-        public List<Component> ComponentList
+        public List<IComponent> ComponentList
         {
             get { return _components.Values.ToList(); }
         }

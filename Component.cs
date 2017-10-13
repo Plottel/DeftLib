@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DeftLib
 {
-    public abstract class Component
+    public interface IComponent
     {
     }
 }

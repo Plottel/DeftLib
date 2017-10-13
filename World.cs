@@ -14,6 +14,15 @@ namespace DeftLib
     {
         private List<Gadget> _gadgets = new List<Gadget>();
 
+        private List<EntitySystem> _systems = new List<EntitySystem>();
+        private List<Entity> _entities = new List<Entity>();
+
+        private ulong _nextID = 1;
+
+        public ulong NextEntityID
+        {
+            get { return _nextID++; }
+        }
 
         EntityPanel entityPanel;
         Entity e;
@@ -21,6 +30,8 @@ namespace DeftLib
         public World()
         {
             entityPanel = new EntityPanel("Entity Editor", new Vector2(10, 10), new Vector2(400, 200));
+
+            _systems.Add(new RectangleRenderingSystem());
 
             e = new Entity();
             e.AddComponent<MovementComponent>(new MovementComponent());
@@ -33,6 +44,10 @@ namespace DeftLib
 
         public void Update(GameTime gameTime)
         {
+            foreach (EntitySystem s in _systems)
+                s.Process();
+
+
             GUIEventHub.OnGUIEvent();
         }
 

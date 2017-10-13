@@ -45,7 +45,7 @@ namespace DeftLib
 
             if (editing != null)
             {
-                var componentsToUpdate = new List<Component>();
+                var componentsToUpdate = new List<IComponent>();
 
                 foreach (var component in editing.ComponentMap)
                 {

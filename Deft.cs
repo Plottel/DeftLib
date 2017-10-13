@@ -10,7 +10,14 @@ namespace DeftLib
     public class Deft : Game
     {
         GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
+        public SpriteBatch spriteBatch;
+
+        private static Deft _instance;
+
+        public static Deft Get
+        {
+            get { return _instance; }
+        }
 
         public static SpriteFont Font10;
         public static SpriteFont Font12;
@@ -22,6 +29,11 @@ namespace DeftLib
 
         public Deft()
         {
+            if (_instance == null)
+                _instance = this;
+            else
+                throw new System.Exception("Cannot have more than one instance of Deft");
+
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;

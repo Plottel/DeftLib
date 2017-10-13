@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 
 namespace DeftLib
 {
-    public class MovementComponent : Component
+    public class MovementComponent : IComponent
     {
         public Vector2 velocity;
         public int acceleration;

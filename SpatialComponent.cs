@@ -7,8 +7,10 @@ using Microsoft.Xna.Framework;
 
 namespace DeftLib
 {
-    public class TestIntComponent : IComponent
+    public class SpatialComponent : IComponent
     {
-        public int a, b, c, d, e, f, g;
+       public Vector2 pos;
+       public Vector2 size;
+       public Vector2 rotation;
     }
 }
