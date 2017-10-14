@@ -34,6 +34,25 @@ namespace DeftLib
             }
         }
 
+        public override void SetGadgetVariable(object newValue)
+        {
+            T component = (T)newValue;
+
+            if (component != null)
+            {
+                foreach (var field in typeof(T).GetFields())
+                {
+                    Type gadgetT = Gadget.gadgetTypeMap[field.FieldType];
+
+                    var mi = typeof(Panel).GetMethod("GetGadget");
+                    var methodRef = mi.MakeGenericMethod(gadgetT);
+
+                    dynamic g = methodRef.Invoke(this, new object[] { field.Name });
+                    g.SetGadgetVariable(field.GetValue(component));
+                }
+            }
+        }
+
         public override void OnGUIEvent()
         {
             base.OnGUIEvent();

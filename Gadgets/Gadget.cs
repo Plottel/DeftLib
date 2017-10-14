@@ -18,6 +18,7 @@ namespace DeftLib
         static Gadget()
         {
             gadgetTypeMap[typeof(int)] = typeof(IntBox);
+            gadgetTypeMap[typeof(float)] = typeof(FloatBox);
             gadgetTypeMap[typeof(Color)] = typeof(ColorPanel);
             gadgetTypeMap[typeof(Vector2)] = typeof(VectorPanel);
             gadgetTypeMap[typeof(Rectangle)] = typeof(RectanglePanel);
@@ -44,6 +45,8 @@ namespace DeftLib
 
             GUIEventHub.Subscribe(this);
         }
+
+        public virtual void SetGadgetVariable(object newValue) { }
 
         public virtual void MoveTo(Vector2 newPos)
             => pos = newPos;

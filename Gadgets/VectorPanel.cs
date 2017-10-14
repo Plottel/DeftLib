@@ -25,6 +25,14 @@ namespace DeftLib
             AddGadget<IntBox>("Y");
         }
 
+        public override void SetGadgetVariable(object newValue)
+        {
+            Vector2 v = (Vector2)newValue;
+
+            GetGadget<IntBox>("X").text = v.X.ToString();
+            GetGadget<IntBox>("Y").text = v.Y.ToString();
+        }   
+
         public Vector2 Value
         {
             get { return editing; }
@@ -32,8 +40,8 @@ namespace DeftLib
 
         public override void OnGUIEvent()
         {
-            editing.X = (byte)GetGadget<IntBox>("X").Value;
-            editing.Y = (byte)GetGadget<IntBox>("Y").Value;
+            editing.X = (float)GetGadget<IntBox>("X").Value;
+            editing.Y = (float)GetGadget<IntBox>("Y").Value;
         }
     }
 }

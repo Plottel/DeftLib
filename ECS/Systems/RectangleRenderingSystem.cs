@@ -9,7 +9,7 @@ using MonoGame.Extended;
 
 namespace DeftLib
 {
-    public class RectangleRenderingSystem : EntitySystem
+    public class RectangleRenderingSystem : EntitySystem, IRenderingSystem
     {
         private SpriteBatch _sb;
 

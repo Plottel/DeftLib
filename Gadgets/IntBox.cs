@@ -27,7 +27,7 @@ namespace DeftLib
             {
                 int result;                
 
-                if (Int32.TryParse(_text, out result))
+                if (Int32.TryParse(text, out result))
                     return result;
                 return 0;
             }

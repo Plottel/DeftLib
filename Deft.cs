@@ -24,9 +24,6 @@ namespace DeftLib
         public static SpriteFont Font14;
         public static SpriteFont Font16;
 
-        private World _world;
-
-
         public Deft()
         {
             if (_instance == null)
@@ -51,8 +48,6 @@ namespace DeftLib
             base.Initialize();
 
             Mouse.WindowHandle = Window.Handle;
-
-            _world = new World();
         }
 
         protected override void LoadContent()
@@ -77,7 +72,8 @@ namespace DeftLib
 
             Input.UpdateStates();
 
-            _world.Update(gameTime);
+            World.HandleInput();
+            World.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -89,7 +85,7 @@ namespace DeftLib
             spriteBatch.Begin();
 
             {
-                _world.Render(spriteBatch);
+                World.Render(spriteBatch);
             }
 
             spriteBatch.End();

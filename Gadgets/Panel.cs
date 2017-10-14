@@ -15,7 +15,7 @@ namespace DeftLib
         private Rectangle _dragRect;
         private bool _isBeingDragged;
         private Point _dragPoint;
-        private List<Gadget> _gadgets;
+        protected List<Gadget> _gadgets;
         private Vector2 _nextGadgetAt;
 
         public List<Gadget> Gadgets
@@ -45,6 +45,7 @@ namespace DeftLib
         public void ClearGadgets()
         {
             _gadgets.Clear();
+            _nextGadgetAt = new Vector2(20, 35);
         }
 
         public void AddGadget<T>(string label) where T : Gadget

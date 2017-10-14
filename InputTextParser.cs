@@ -32,6 +32,7 @@ namespace DeftLib
                     case Keys.Back: break;
                     case Keys.Tab: break;
                     case Keys.Insert: break;
+                    case Keys.Enter: break;
 
                     default: result += key.ToString(); break;
                 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.IO;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -63,6 +64,17 @@ namespace DeftLib
         public static int Row(this Point pt)
         {
             return pt.Y;
+        }
+
+        public static void WriteVector2(this BinaryWriter writer, Vector2 v)
+        {
+            writer.Write(v.X);
+            writer.Write(v.Y);
+        }
+
+        public static Vector2 ReadVector2(this BinaryReader reader)
+        {
+            return new Vector2(reader.ReadSingle(), reader.ReadSingle());
         }
     }
 }

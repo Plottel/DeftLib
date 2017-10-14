@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.CSharp.RuntimeBinder;
+using Microsoft.Xna.Framework.Input;
 
 namespace DeftLib
 {
@@ -16,19 +17,16 @@ namespace DeftLib
         {           
         }
 
+        // TODO: Store generic method invocation stuff. It's being duplicated.
         public void SetEntity(Entity e)
         {
             editing = e;
             ClearGadgets();
 
+            AddGadget<StringBox>("Add Component");
+
             foreach (var component in editing.ComponentMap)
             {
-                // TODO: I think i need an extra level of "Generic Method fetching"
-                // We're always fetching "ComponentPanel"
-                // Extra generic to fetch is ComponentPanel<T>
-
-                //T newGadget = (T)Activator.CreateInstance(typeof(T), label, _nextGadgetAt);
-
                 var cpType = typeof(ComponentPanel<>);
                 Type[] typeArg = { component.Key };
                 var concreteCPType = cpType.MakeGenericType(typeArg);
@@ -36,6 +34,8 @@ namespace DeftLib
                 var addGadgetMethod = typeof(Panel).GetMethod("AddGadget");
                 var addGadgetCall = addGadgetMethod.MakeGenericMethod(concreteCPType);
                 addGadgetCall.Invoke(this, new object[] { component.Key.Name});
+
+               _gadgets.Last().SetGadgetVariable(component.Value);
             }
         }
 
@@ -43,9 +43,25 @@ namespace DeftLib
         {
             base.OnGUIEvent();
 
+            if (!Input.KeyTyped(Keys.Enter))
+                return;
+            
+            // TODO: Clean up MESSY logic.
+            string componentToAdd = GetGadget<StringBox>("Add Component").Value;
+            componentToAdd = "MovementComponent";
+            Type typeToAdd = Type.GetType("DeftLib." + componentToAdd);
+
+            if (typeToAdd != null && typeToAdd.IsSubclassOf(typeof(Component)))
+            {
+                if (editing != null)
+                {
+                    editing.AddComponent((Component)Activator.CreateInstance(typeToAdd));
+                }                    
+            }
+
             if (editing != null)
             {
-                var componentsToUpdate = new List<IComponent>();
+                var componentsToUpdate = new List<Component>();
 
                 foreach (var component in editing.ComponentMap)
                 {
@@ -58,11 +74,12 @@ namespace DeftLib
 
                     dynamic g = getGadgetCall.Invoke(this, new object[] { component.Key.Name});
 
-                    componentsToUpdate.Add(g.Value);                    
+                    if (g != null) // TODO: This is a side effect of AddComponent button adding a gadget midway through Gadget list iteration.
+                        componentsToUpdate.Add(g.Value);                    
                 }
 
                 foreach (var newComponent in componentsToUpdate)
-                    editing.ReplaceComponent(newComponent);  // TODO: This really needs to clone the component;
+                    editing.ReplaceComponent(newComponent.Copy());
             }
         }
     }

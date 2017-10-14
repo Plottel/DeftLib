@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 
 namespace DeftLib
 {
-    class StringBox : InputBox
+    public class StringBox : InputBox
     {
         public static Vector2 DEFAULT_SIZE = new Vector2(200, 30);
 
@@ -24,7 +24,7 @@ namespace DeftLib
 
         public string Value
         {
-            get { return _text; }
+            get { return text; }
         }
     }
 }

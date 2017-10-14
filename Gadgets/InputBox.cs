@@ -14,8 +14,7 @@ namespace DeftLib
     {
         private Rectangle _stringRect;
         private bool _isTyping;
-
-        protected string _text;
+        public string text;
 
         // Default constructor for Reflection instantiation
         public InputBox() : this("", Vector2.Zero, Vector2.Zero)
@@ -30,7 +29,12 @@ namespace DeftLib
             _stringRect.Y = (int)(pos.Y + 5);
 
             _isTyping = false;
-            _text = "";
+            text = "";
+        }
+
+        public override void SetGadgetVariable(object newValue)
+        {
+            text = newValue.ToString();
         }
 
         public override void MoveTo(Vector2 newPos)
@@ -56,13 +60,13 @@ namespace DeftLib
             if (_isTyping)
             {
 
-                if (Input.KeyTyped(Keys.Back) && _text.Length > 0)
-                    _text = _text.Remove(_text.Length - 1);
+                if (Input.KeyTyped(Keys.Back) && text.Length > 0)
+                    text = text.Remove(text.Length - 1);
                 else
                 {
                     foreach (var key in Input.TypedKeys)
                     {
-                        _text += InputTextParser.ParseKeys(Input.TypedKeys);
+                        text += InputTextParser.ParseKeys(Input.TypedKeys);
                     }
                 }
             }
@@ -73,7 +77,7 @@ namespace DeftLib
             spriteBatch.DrawRectangle(_stringRect, Color.Black, 1);
 
             spriteBatch.DrawString(Deft.Font10, label, pos.Add(5), Color.Black);
-            spriteBatch.DrawString(Deft.Font10, _text, _stringRect.Location.ToVector2().Add(3), Color.Black);
+            spriteBatch.DrawString(Deft.Font10, text, _stringRect.Location.ToVector2().Add(3), Color.Black);
         }
     }
 }
