@@ -13,7 +13,13 @@ namespace DeftLib
     {
         public Entity editing;
 
-        public EntityPanel(string label, Vector2 pos, Vector2 size) : base(label, pos, size)
+        public EntityPanel(int layer) : this("", Vector2.Zero, Vector2.Zero, layer)
+        { }
+
+        public EntityPanel(string label, Vector2 pos, Vector2 size) : this(label, pos, size, 1)
+        { }
+
+        public EntityPanel(string label, Vector2 pos, Vector2 size, int layer) : base(label, pos, size, layer)
         {           
         }
 

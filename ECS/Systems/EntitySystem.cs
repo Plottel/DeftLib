@@ -19,7 +19,7 @@ namespace DeftLib
             foreach (Type t in _requiredComponents)
             {
                 if (!e.HasComponent(t))
-                    return false;
+                    return false;     
             }
 
             return true;

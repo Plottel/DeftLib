@@ -13,13 +13,17 @@ namespace DeftLib
         public Color editing;
 
         // Default constructor for Reflection instantiation
-        public ColorPanel() : this("", Vector2.Zero, DEFAULT_SIZE)
+        public ColorPanel() : this("", Vector2.Zero, DEFAULT_SIZE, 1)
         { }
 
-        public ColorPanel(string label, Vector2 pos) : this(label, pos, DEFAULT_SIZE)
+        // Layer constructor for Reflection instantiation
+        public ColorPanel(int layer) : this("", Vector2.Zero, DEFAULT_SIZE, layer)
         { }
 
-        public ColorPanel(string label, Vector2 pos, Vector2 size) : base(label, pos, size)
+        public ColorPanel(string label, Vector2 pos) : this(label, pos, DEFAULT_SIZE, 1)
+        { }
+
+        public ColorPanel(string label, Vector2 pos, Vector2 size, int layer) : base(label, pos, size, layer)
         {
             AddGadget<IntBox>("R");
             AddGadget<IntBox>("G");

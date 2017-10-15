@@ -18,10 +18,13 @@ namespace DeftLib
         }
 
         // Default constructor for Reflection instantiation
-        public ComponentPanel() : this("", Vector2.Zero, Vector2.Zero)
+        public ComponentPanel() : this("", Vector2.Zero, Vector2.Zero, 1)
         { }
 
-        public ComponentPanel(string label, Vector2 pos, Vector2 size) : base(label, pos, size)
+        public ComponentPanel(int layer) : this("", Vector2.Zero, Vector2.Zero, layer)
+        { }
+
+        public ComponentPanel(string label, Vector2 pos, Vector2 size, int layer) : base(label, pos, size, layer)
         {
             foreach (var field in typeof(T).GetFields())
             {

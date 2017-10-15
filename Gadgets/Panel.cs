@@ -26,10 +26,13 @@ namespace DeftLib
         private const int PADDING_BETWEEN_GADGETS = 0;
 
         // Default constructor for Reflection instantiation
-        public Panel() : this("", Vector2.Zero, Vector2.Zero)
+        public Panel() : this("", Vector2.Zero, Vector2.Zero, 1)
         { }
 
-        public Panel(string label, Vector2 pos, Vector2 size) : base(label, pos, size)
+        public Panel(int layer) : this ("", Vector2.Zero, Vector2.Zero, layer)
+        {}
+
+        public Panel(string label, Vector2 pos, Vector2 size, int layer) : base(label, pos, size, layer)
         {
             _nextGadgetAt = new Vector2(20, 35);
 
@@ -50,7 +53,7 @@ namespace DeftLib
 
         public void AddGadget<T>(string label) where T : Gadget
         {
-            T newGadget = (T)Activator.CreateInstance(typeof(T));
+            T newGadget = (T)Activator.CreateInstance(typeof(T), this.Layer + 1); // Panels are "behind" their gadgets.
             newGadget.label = label;
             newGadget.MoveTo(pos + _nextGadgetAt);
 

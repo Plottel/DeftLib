@@ -184,6 +184,9 @@ namespace DeftLib
 
             foreach (var g in _gadgets)
                 g.Render(spriteBatch);
+
+            if (GUIEventHub.ActiveListener != null)
+                spriteBatch.DrawRectangle(GUIEventHub.ActiveListener.Bounds, Color.Blue, 2);
         }
     }
 }

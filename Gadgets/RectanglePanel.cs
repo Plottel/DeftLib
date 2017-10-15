@@ -13,13 +13,16 @@ namespace DeftLib
         public Rectangle editing;
 
         // Default constructor for Reflection instantiation
-        public RectanglePanel() : this("", Vector2.Zero, DEFAULT_SIZE)
+        public RectanglePanel() : this("", Vector2.Zero, DEFAULT_SIZE, 1)
         { }
 
-        public RectanglePanel(string label, Vector2 pos) : this(label, pos, DEFAULT_SIZE)
+        public RectanglePanel(int layer) : this("", Vector2.Zero, DEFAULT_SIZE, layer)
         { }
 
-        public RectanglePanel(string label, Vector2 pos, Vector2 size) : base(label, pos, size)
+        public RectanglePanel(string label, Vector2 pos) : this(label, pos, DEFAULT_SIZE, 1)
+        { }
+
+        public RectanglePanel(string label, Vector2 pos, Vector2 size, int layer) : base(label, pos, size, layer)
         {
             AddGadget<IntBox>("X");
             AddGadget<IntBox>("Y");

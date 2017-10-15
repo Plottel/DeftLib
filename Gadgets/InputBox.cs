@@ -13,14 +13,16 @@ namespace DeftLib
     public abstract class InputBox : Gadget
     {
         private Rectangle _stringRect;
-        private bool _isTyping;
         public string text;
 
         // Default constructor for Reflection instantiation
-        public InputBox() : this("", Vector2.Zero, Vector2.Zero)
+        public InputBox() : this("", Vector2.Zero, Vector2.Zero, 1)
         { }
 
-        public InputBox(string label, Vector2 pos, Vector2 size) : base(label, pos, size)
+        public InputBox(int layer) : this("", Vector2.Zero, Vector2.Zero, layer)
+        { }
+
+        public InputBox(string label, Vector2 pos, Vector2 size, int layer) : base(label, pos, size, layer)
         {
             _stringRect = Rectangle.Empty;
             _stringRect.Width = (int)size.X / 2;
@@ -28,7 +30,6 @@ namespace DeftLib
             _stringRect.X = (int)(pos.X + size.X - _stringRect.Width - 5);
             _stringRect.Y = (int)(pos.Y + 5);
 
-            _isTyping = false;
             text = "";
         }
 
@@ -54,20 +55,13 @@ namespace DeftLib
 
         public override void OnGUIEvent()
         {
-            if (Input.LeftMousePressed())
-                _isTyping = _stringRect.Contains(Input.MousePos.ToPoint());
-
-            if (_isTyping)
+            if (Input.KeyTyped(Keys.Back) && text.Length > 0)
+                text = text.Remove(text.Length - 1);
+            else
             {
-
-                if (Input.KeyTyped(Keys.Back) && text.Length > 0)
-                    text = text.Remove(text.Length - 1);
-                else
+                foreach (var key in Input.TypedKeys)
                 {
-                    foreach (var key in Input.TypedKeys)
-                    {
-                        text += InputTextParser.ParseKeys(Input.TypedKeys);
-                    }
+                    text += InputTextParser.ParseKeys(Input.TypedKeys);
                 }
             }
         }

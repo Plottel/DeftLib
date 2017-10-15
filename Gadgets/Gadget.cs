@@ -13,8 +13,6 @@ namespace DeftLib
         public static Dictionary<Type, Type> gadgetTypeMap = 
             new Dictionary<Type, Type>();
 
-        public bool isSelected = false;
-
         static Gadget()
         {
             gadgetTypeMap[typeof(int)] = typeof(IntBox);
@@ -24,6 +22,7 @@ namespace DeftLib
             gadgetTypeMap[typeof(Rectangle)] = typeof(RectanglePanel);
         }
 
+        public int Layer { get; set; }
         public Vector2 pos;
         public Vector2 size;
         public string label;
@@ -34,11 +33,16 @@ namespace DeftLib
         }
 
         // Default constructor for Reflection instantiation
-        public Gadget() : this("", Vector2.Zero, Vector2.Zero)
+        public Gadget() : this("", Vector2.Zero, Vector2.Zero, 1)
         { }
 
-        public Gadget(string label, Vector2 pos, Vector2 size)
+        // Layer constructor for Reflection instantiation
+        public Gadget(int layer) : this("", Vector2.Zero, Vector2.Zero, layer)
+        { }
+
+        public Gadget(string label, Vector2 pos, Vector2 size, int layer)
         {
+            this.Layer = layer;
             this.pos = pos;
             this.size = size;
             this.label = label;

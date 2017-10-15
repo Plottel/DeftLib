@@ -12,8 +12,11 @@ namespace DeftLib
     {
         void OnGUIEvent();
         Rectangle Bounds { get; }
+        int Layer { get; set; }
     }
 
+    // TODO: This is too dumb. Hubs are dumb. Make it a switch or a train network or something.
+    // PROPER EVENT MANAGEMENT WITH STATES AND STUFF
     public static class GUIEventHub
     {
         private static List<GUIEventListener> _listeners = new List<GUIEventListener>();
@@ -32,13 +35,15 @@ namespace DeftLib
 
         public static void OnGUIEvent()
         {
-            foreach (var listener in _listeners)
-                listener.OnGUIEvent();
-
             // Select new active gadget on left mouse press
             if (Input.LeftMousePressed())
             {
-                foreach (GUIEventListener g in _listeners)
+                var depthOrderedListeners = _listeners.OrderByDescending(g => g.Layer).ToList();
+
+                Console.WriteLine("Highest Depth: " + depthOrderedListeners[0].Layer);
+
+                // When selecting a gadget, select in order of layer. Top layer first.
+                foreach (GUIEventListener g in depthOrderedListeners)
                 {
                     if (g.Bounds.Contains(Input.MousePos))
                     {
@@ -56,12 +61,15 @@ namespace DeftLib
                     int index = _listeners.IndexOf(_activeListener);
                     ++index;
 
-                    if (index >= _listeners.Count - 1)
+                    if (index >= _listeners.Count)
                         index = 0;
 
                     _activeListener = _listeners[index];
                 }
             }
+
+            if (_activeListener != null)
+                _activeListener.OnGUIEvent();
         }
     }
 }
