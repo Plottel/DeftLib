@@ -41,33 +41,49 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="ECS\Systems\MovementSystem.cs" />
-    <Compile Include="Gadgets\FloatBox.cs" />
-    <Compile Include="Gadgets\ColorPanel.cs" />
-    <Compile Include="ECS\Components\Component.cs" />
-    <Compile Include="Gadgets\ComponentPanel.cs" />
-    <Compile Include="Deft.cs" />
+    <Compile Include="Assets.cs" />
+    <Compile Include="ComponentEditorTool.cs" />
+    <Compile Include="ECS\ECSCore.cs" />
+    <Compile Include="ECS\EntitySystem.cs" />
+    <Compile Include="GameState.cs" />
+    <Compile Include="Grid.cs" />
+    <Compile Include="GUI\Button.cs" />
+    <Compile Include="ECS\Component.cs" />
+    <Compile Include="GUI\ComponentPanel.cs" />
+    <Compile Include="Core\Deft.cs" />
     <Compile Include="ECS\Entity.cs" />
-    <Compile Include="Gadgets\EntityPanel.cs" />
-    <Compile Include="ECS\Systems\EntitySystem.cs" />
-    <Compile Include="Gadgets\GUIEventHub.cs" />
+    <Compile Include="GUI\EntityPanel.cs" />
     <Compile Include="ExtensionMethods.cs" />
-    <Compile Include="Gadgets\Gadget.cs" />
-    <Compile Include="Input.cs" />
-    <Compile Include="InputTextParser.cs" />
-    <Compile Include="Gadgets\IntBox.cs" />
-    <Compile Include="ECS\Systems\IRenderingSystem.cs" />
-    <Compile Include="ECS\Components\MovementComponent.cs" />
-    <Compile Include="Gadgets\Panel.cs" />
+    <Compile Include="GUI\FieldGadget.cs" />
+    <Compile Include="GUI\FloatBox.cs" />
+    <Compile Include="GUI\Gadget.cs" />
+    <Compile Include="GUI\GUIEventHub.cs" />
+    <Compile Include="InEditorGameState.cs" />
+    <Compile Include="InGamePlayGameState.cs" />
+    <Compile Include="Input\Input.cs" />
+    <Compile Include="GUI\InputBox.cs" />
+    <Compile Include="GUI\IntBox.cs" />
+    <Compile Include="ECS\MovementComponent.cs" />
+    <Compile Include="GUI\Panel.cs" />
+    <Compile Include="ECS\SpatialComponent.cs" />
+    <Compile Include="GUI\StringBox.cs" />
+    <Compile Include="Input\InputTextParser.cs" />
+    <Compile Include="ECS\IRenderingSystem.cs" />
+    <Compile Include="ECS\MovementSystem.cs" />
+    <Compile Include="InTileMapEditorGameState.cs" />
+    <Compile Include="GUI\TileMapEditor\OriginalImageTileMapEditorPanel.cs" />
+    <Compile Include="InWorldEditorGameState.cs" />
     <Compile Include="Program.cs" />
+    <Compile Include="ECS\ProgramStatePanel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Gadgets\InputBox.cs" />
-    <Compile Include="Gadgets\RectanglePanel.cs" />
-    <Compile Include="ECS\Systems\RectangleRenderingSystem.cs" />
-    <Compile Include="ECS\Components\SpatialComponent.cs" />
-    <Compile Include="Gadgets\StringBox.cs" />
-    <Compile Include="Gadgets\VectorPanel.cs" />
-    <Compile Include="World.cs" />
+    <Compile Include="GUI\Vector2Panel.cs" />
+    <Compile Include="Core\World.cs" />
+    <Compile Include="SpatialComponentEditorTool.cs" />
+    <Compile Include="Graphics\Tile.cs" />
+    <Compile Include="GUI\TileMapEditor\TileMapEditorPanel.cs" />
+    <Compile Include="TileGrid.cs" />
+    <Compile Include="TileNeighbourDirection.cs" />
+    <Compile Include="WorldEditorTileMapPanel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
@@ -91,6 +107,7 @@
     <None Include="app.manifest" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Content.Builder.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

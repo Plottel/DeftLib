@@ -92,7 +92,7 @@ namespace DeftLib
                 _components[component.GetType()] = component;
         }
 
-        public void AddComponent<T>(Component component)
+        public void AddComponent<T>(Component component) where T : Component
         {
             _components.Add(typeof(T), component);
             UpdateEntitySystemPlacementAfterComponentChange();
@@ -102,7 +102,12 @@ namespace DeftLib
         {
             _components[component.GetType()] = component;
             UpdateEntitySystemPlacementAfterComponentChange();
-        }    
+        }
+
+        public void AddComponent<T>() where T : Component
+        {
+            _components[typeof(T)] = (T)Activator.CreateInstance(typeof(T));
+        }
 
         public void RemoveComponent<T>(Component component)
         {
@@ -124,12 +129,11 @@ namespace DeftLib
                 _components.Remove(componentType);
                 UpdateEntitySystemPlacementAfterComponentChange();
             }
-
         }
-        
+
         private void UpdateEntitySystemPlacementAfterComponentChange()
         {
-            World.PlaceEntityInSystems(this);
+            ECSCore.PlaceEntityInSystems(this);
         }
     }
 }

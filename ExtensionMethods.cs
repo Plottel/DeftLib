@@ -76,5 +76,24 @@ namespace DeftLib
         {
             return new Vector2(reader.ReadSingle(), reader.ReadSingle());
         }
+
+        public static void WriteRectangle(this BinaryWriter writer, Rectangle r)
+        {
+            writer.Write(r.X);
+            writer.Write(r.Y);
+            writer.Write(r.Width);
+            writer.Write(r.Height);
+        }
+
+        public static Rectangle ReadRectangle(this BinaryReader reader)
+        {
+            return new Rectangle
+            (
+                    reader.ReadInt32(),
+                    reader.ReadInt32(),
+                    reader.ReadInt32(),
+                    reader.ReadInt32()
+            );
+        }
     }
 }
