@@ -19,6 +19,16 @@ namespace DeftLib
             get { return new Rectangle(pos.ToPoint(), size.ToPoint()); }
         }
 
+        public Point MidPt
+        {
+            get { return new Point((int)pos.X + (int)size.X / 2, (int)pos.Y + (int)size.Y / 2); }
+        }
+
+        public Vector2 MidVector
+        {
+            get { return new Vector2(pos.X + size.X / 2, pos.Y + size.Y / 2); }
+        }
+
         public override void Serialize(BinaryWriter writer)
         {
             writer.WriteVector2(pos);

@@ -11,6 +11,14 @@ namespace DeftLib
     {
         private Dictionary<Type, Component> _components = new Dictionary<Type, Component>();
 
+        public Entity Copy()
+        {
+            var copy = new Entity();
+            foreach (var component in ComponentList)
+                copy.AddComponent(component.Copy());
+            return copy;
+        }
+
         /// <summary>
         /// Serializes all components into a BinaryWriter
         /// </summary>

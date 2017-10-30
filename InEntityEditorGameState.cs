@@ -10,16 +10,23 @@ using MonoGame.Extended;
 
 namespace DeftLib
 {
-    public class InEditorGameState : GameState
+    public class InEntityEditorGameState : GameState
     {
-        private EntityPanel _entityPanel = new EntityPanel("Entity Editor", new Vector2(10, 10), new Vector2(300, 300));
+        private EntityPanel _entityPanel = new EntityPanel("Entity Editor", new Vector2(10, 10), new Vector2(300, 500));
+        private PrototypeInstantiationPanel _prototypePanel = new PrototypeInstantiationPanel("Instantiate Prototypes with F1", new Vector2(620, 10), new Vector2(350, 200), 1);
+
         private Entity _selectedEntity;
         private SpatialComponentEditorTool _spatialEditor = new SpatialComponentEditorTool();
+
         private Dictionary<Type, ComponentEditorTool> _editorTools = new Dictionary<Type, ComponentEditorTool>();
 
-        public InEditorGameState()
+        // TODO: Build a public API around Editor Tools
+        // User should be able to create custom components and 
+        // assign ComponentEditorTool objects to them.
+        public InEntityEditorGameState()
         {
             _editorTools[typeof(SpatialComponent)] = new SpatialComponentEditorTool();
+            _editorTools[typeof(MovementComponent)] = new MovementComponentEditorTool();
         }
 
         private ComponentEditorTool ActiveTool
@@ -39,18 +46,19 @@ namespace DeftLib
         public override void Enter()
         {
             GUIEventHub.Subscribe(_entityPanel);
-            World.LoadWorld();
+            GUIEventHub.Subscribe(_prototypePanel);
         }
 
         public override void Exit()
         {
             GUIEventHub.Unsubscribe(_entityPanel);
+            GUIEventHub.Unsubscribe(_prototypePanel);
         }
 
         public override void HandleInput()
         {
             if (Input.KeyTyped(Keys.F1))
-                CreateDefaultEntityAtMousePos();
+                InstantiateSelectedPrototypeAtMousePos();
 
             if (Input.KeyTyped(Keys.Delete))
             {
@@ -98,21 +106,25 @@ namespace DeftLib
 
         public override void RenderGUI(SpriteBatch spriteBatch)
         {
-            _entityPanel.Render(spriteBatch);
-
             if (ActiveTool != null)
                 ActiveTool.RenderGUI(spriteBatch);
 
             if (_selectedEntity != null)
                 spriteBatch.DrawRectangle(_selectedEntity.GetComponent<SpatialComponent>().Bounds, Color.LawnGreen, 2);
+
+            _entityPanel.Render(spriteBatch);
+            _prototypePanel.Render(spriteBatch);
         }
 
-        private void CreateDefaultEntityAtMousePos()
+        private void InstantiateSelectedPrototypeAtMousePos()
         {
-            var e = new Entity();
-            var spatial = new SpatialComponent() { pos = Input.MousePos, size = new Vector2(50, 50) };
-            e.AddComponent(spatial);
-            World.entities.Add(e);
+            var prototypeName = _prototypePanel.SelectedPrototypeName;
+
+            if (prototypeName != "")
+            {
+                var newEntity = Prototypes.Create(prototypeName, Input.MousePos);
+                World.entities.Add(newEntity);
+            }
         }
     }
 }

@@ -4,15 +4,15 @@
   <Platform>Windows</Platform>
   <Config />
   <SourceFiles>
-    <File>C:/Users/User/Desktop/DeftLib - Copy/Content/font_6.spritefont</File>
-    <File>C:/Users/User/Desktop/DeftLib - Copy/Content/font_8.spritefont</File>
-    <File>C:/Users/User/Desktop/DeftLib - Copy/Content/font_10.spritefont</File>
-    <File>C:/Users/User/Desktop/DeftLib - Copy/Content/font_12.spritefont</File>
-    <File>C:/Users/User/Desktop/DeftLib - Copy/Content/font_14.spritefont</File>
-    <File>C:/Users/User/Desktop/DeftLib - Copy/Content/font_16.spritefont</File>
-    <File>C:/Users/User/Desktop/DeftLib - Copy/Content/TileMapDragAndDropGadgets.png</File>
-    <File>C:/Users/User/Desktop/DeftLib - Copy/Content/TileMaps/DirtTileMap.png</File>
-    <File>C:/Users/User/Desktop/DeftLib - Copy/Content/TileMaps/WaterTileMap.png</File>
-    <File>C:/Users/User/Desktop/DeftLib - Copy/Content/TileMaps/MossyPathTileMap.png</File>
+    <File>C:/Users/User/Desktop/DeftLib/Content/font_6.spritefont</File>
+    <File>C:/Users/User/Desktop/DeftLib/Content/font_8.spritefont</File>
+    <File>C:/Users/User/Desktop/DeftLib/Content/font_10.spritefont</File>
+    <File>C:/Users/User/Desktop/DeftLib/Content/font_12.spritefont</File>
+    <File>C:/Users/User/Desktop/DeftLib/Content/font_14.spritefont</File>
+    <File>C:/Users/User/Desktop/DeftLib/Content/font_16.spritefont</File>
+    <File>C:/Users/User/Desktop/DeftLib/Content/TileMapDragAndDropGadgets.png</File>
+    <File>C:/Users/User/Desktop/DeftLib/Content/TileMaps/DirtTileMap.png</File>
+    <File>C:/Users/User/Desktop/DeftLib/Content/TileMaps/WaterTileMap.png</File>
+    <File>C:/Users/User/Desktop/DeftLib/Content/TileMaps/MossyPathTileMap.png</File>
   </SourceFiles>
 </SourceFileCollection>

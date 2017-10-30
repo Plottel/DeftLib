@@ -10,16 +10,19 @@ namespace DeftLib
 {
     public class MovementComponent : Component
     {
-        public Vector2 velocity;
+        public Vector2 direction;
+        public float speed;
 
         public override void Serialize(BinaryWriter writer)
         {
-            writer.WriteVector2(velocity);
+            writer.WriteVector2(direction);
+            writer.Write(speed);
         }
 
         public override void Deserialize(BinaryReader reader)
         {
-            velocity = reader.ReadVector2();
+            direction = reader.ReadVector2();
+            speed = reader.ReadSingle();
         }
     }
 }

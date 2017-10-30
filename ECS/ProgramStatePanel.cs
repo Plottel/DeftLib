@@ -29,7 +29,9 @@ namespace DeftLib
             AddGadget<Button>("Stop Scene");
             AddGadget<Button>("Save Scene");
             AddGadget<Button>("Load Scene");
+            AddGadget<Button>("Entity Prototype Editor");
             AddGadget<Button>("Tile Map Editor");
+            AddGadget<Button>("Entity Editor");
             AddGadget<Button>("World Editor");
         }
 
@@ -40,7 +42,7 @@ namespace DeftLib
             if (GetGadget<Button>("Play Scene").IsClicked)
                 World.PushState(new InGamePlayGameState());
             else if (GetGadget<Button>("Stop Scene").IsClicked)
-                World.PushState(new InEditorGameState());
+                World.PushState(new InEditorMenuGameState());
             else if (GetGadget<Button>("Save Scene").IsClicked)
                 World.SaveWorld();
             else if (GetGadget<Button>("Load Scene").IsClicked)
@@ -49,6 +51,10 @@ namespace DeftLib
                 World.PushState(new InTileMapEditorGameState());
             else if (GetGadget<Button>("World Editor").IsClicked)
                 World.PushState(new InWorldEditorGameState());
+            else if (GetGadget<Button>("Entity Editor").IsClicked)
+                World.PushState(new InEntityEditorGameState());
+            else if (GetGadget<Button>("Entity Prototype Editor").IsClicked)
+                World.PushState(new InPrototypeEditorGameState());
         }
     }
 }

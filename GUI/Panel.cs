@@ -11,7 +11,6 @@ namespace DeftLib
 {
     public class Panel : Gadget
     {
-        // TODO: Make private
         private Rectangle _dragRect;
         private bool _isBeingDragged;
         private Point _dragPoint;
@@ -28,11 +27,19 @@ namespace DeftLib
         protected Vector2 NextGadgetAt
         {
             get { return _nextGadgetAt; }
+            set { _nextGadgetAt = value; }
         }
 
         public List<Gadget> Gadgets
         {
             get { return _gadgets; }
+        }
+
+        public override void SetLayer(int newLayer)
+        {
+            base.SetLayer(newLayer);
+            foreach (var g in _gadgets)
+                g.SetLayer(newLayer + 1);
         }
 
         protected const int PADDING_BETWEEN_GADGETS = 0;
@@ -82,8 +89,10 @@ namespace DeftLib
 
             _nextGadgetAt.Y += newGadget.size.Y + PADDING_BETWEEN_GADGETS;
 
-            if (_nextGadgetAt.Y > pos.Y + size.Y - 35)
-                size.Y = _nextGadgetAt.Y - pos.Y + 50;
+            int footerSpace = (int)((this.pos.Y + this.size.Y) - (newGadget.pos.Y + newGadget.size.Y));
+
+            if (footerSpace < 0)
+                size.Y += (footerSpace * -1) + 5;
         }
 
         public T GetGadget<T>(string label) where T : Gadget
@@ -127,7 +136,7 @@ namespace DeftLib
             HandleInnerGadgetEvent();
         }
 
-        private void HandleOuterPanelEvent()
+        protected void HandleOuterPanelEvent()
         {
             // Handle active gadget selection
             if (Input.LeftMouseClicked())
@@ -140,7 +149,7 @@ namespace DeftLib
             {
                 _activeGadget = null;
 
-                foreach (var g in _gadgets)
+                foreach (var g in _gadgets.OrderByDescending(g => g.layer)) // Consider higher layer gadgets first
                 {
                     if (g.Bounds.Contains(Input.MousePos))
                     {
@@ -166,13 +175,29 @@ namespace DeftLib
             }            
         }
 
-        private void HandleInnerGadgetEvent()
+        protected void HandleInnerGadgetEvent()
         {
             if (Input.LeftMouseDown() && MouseOnDragRect)
                 return;
 
             if (_activeGadget != null)
                 _activeGadget.OnGUIEvent();
+        }
+
+        public void RenderWithoutGadgets(SpriteBatch spriteBatch)
+        {
+            spriteBatch.FillRectangle(pos, size, Color.LightGray);
+            spriteBatch.DrawString(Deft.Font12, label, pos.Add(5), Color.Black);
+
+            if (_activeGadget != null)
+                spriteBatch.DrawRectangle(_activeGadget.Bounds.GetInflated(2, 2), Color.Blue, 2);
+
+            // If a top layer panel, draw border.
+            if (layer == 1)
+            {
+                spriteBatch.DrawRectangle(Bounds.GetInflated(2, 2), Color.Blue, 2);
+                spriteBatch.DrawRectangle(_dragRect.GetInflated(2, 2), Color.Blue, 2);
+            }
         }
 
         public override void Render(SpriteBatch spriteBatch)

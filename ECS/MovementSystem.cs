@@ -23,7 +23,7 @@ namespace DeftLib
                 spatial = e.GetComponent<SpatialComponent>();
                 movement = e.GetComponent<MovementComponent>();
 
-                spatial.pos += movement.velocity;
+                spatial.pos += Vector2.Normalize(movement.direction) * movement.speed;
             }
         }
     }

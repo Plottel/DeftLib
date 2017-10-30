@@ -15,8 +15,17 @@ namespace DeftLib
         private List<Type> allComponentTypes;
         private StringBox _addComponentStringBox;
         private StringBox _removeComponentStringBox;
+        private StringBox _viewComponentStringBox;
 
-        public EntityPanel(int layer) : this("", Vector2.Zero, Vector2.Zero, layer)
+        private Vector2 _componentPanelPos;
+        private Panel _activeComponentPanel;
+
+        public const int DEFAULT_WIDTH = 300;
+        public const int DEFAULT_HEIGHT = 600;
+
+        private const int FRONT_COMPONENT_PANEL_LAYER = 100;
+
+        public EntityPanel(int layer) : this("", Vector2.Zero, new Vector2(DEFAULT_WIDTH, DEFAULT_HEIGHT), layer)
         { }
 
         public EntityPanel(string label, Vector2 pos, Vector2 size) : this(label, pos, size, 1)
@@ -24,7 +33,7 @@ namespace DeftLib
 
         public EntityPanel(string label, Vector2 pos, Vector2 size, int layer) : base(label, pos, size, layer)
         {
-            AddTheAddComponentButton();
+            AddNonComponentPanelGadgets();
         }
 
         private List<String> AllComponentTypeNames
@@ -40,7 +49,7 @@ namespace DeftLib
             }
         }
 
-        private void AddTheAddComponentButton()
+        private void AddNonComponentPanelGadgets()
         {
             AddGadget<StringBox>("Add");
             _addComponentStringBox = GetGadget<StringBox>("Add");
@@ -48,25 +57,49 @@ namespace DeftLib
             AddGadget<StringBox>("Remove");
             _removeComponentStringBox = GetGadget<StringBox>("Remove");
 
+            AddGadget<StringBox>("View");
+            _viewComponentStringBox = GetGadget<StringBox>("View");
+
             allComponentTypes = (from domainAssembly in AppDomain.CurrentDomain.GetAssemblies()
                                      from assemblyType in domainAssembly.GetTypes()
                                      where typeof(Component).IsAssignableFrom(assemblyType)
                                      select assemblyType).ToList();
             allComponentTypes.Remove(typeof(Component));
+
+            _componentPanelPos = NextGadgetAt + new Vector2(0, 20);
+        }
+
+        private void RenderNonComponentPanelGadgets(SpriteBatch spriteBatch)
+        {
+            _addComponentStringBox.Render(spriteBatch);
+            _removeComponentStringBox.Render(spriteBatch);
+            _viewComponentStringBox.Render(spriteBatch);
         }
 
         public void SetEntity(Entity e)
         {
-            _editing = e;
             ClearGadgets();
-            AddTheAddComponentButton();
+            AddNonComponentPanelGadgets();
 
-            foreach (var componentTypePair in _editing.ComponentMap)
+            foreach (var componentTypePair in e.ComponentMap)
                 AddAndSyncComponentPanel(componentTypePair);
+
+            // Don't change active component panel if resetting to the same Entity
+            if (_editing != e)
+            {
+                _activeComponentPanel = GetGadget<Panel>("SpatialComponent");
+                _activeComponentPanel.SetLayer(FRONT_COMPONENT_PANEL_LAYER);
+            }
+
+            _editing = e;
         }
 
         private void AddAndSyncComponentPanel(KeyValuePair<Type, Component> componentTypePair)
         {
+            // Cache old NextGadgetAtPos since component panels are technically "on top of each other"
+            var oldNextGadgetPos = NextGadgetAt;
+
+
             // Create Concrete Component Panel Type
             var genericComponentPanelType = typeof(ComponentPanel<>);
             Type[] concreteTypeArgs = { componentTypePair.Key };
@@ -77,7 +110,11 @@ namespace DeftLib
             var concreteAddGadgetMethod = genericAddGadgetMethod.MakeGenericMethod(concreteComponentPanelType);
             concreteAddGadgetMethod.Invoke(this, new object[] { componentTypePair.Key.Name });
 
+            // Reset NextGadgetAt so adding component panels doesn't move it down
+            NextGadgetAt = oldNextGadgetPos;
+
             // Sync new Component Panel with passed in Component
+            _gadgets.Last().MoveTo(this.pos + _componentPanelPos);
             _gadgets.Last().SyncGadget(componentTypePair.Value);
         }
 
@@ -132,7 +169,7 @@ namespace DeftLib
                     }
                     else if (ActiveGadget == _removeComponentStringBox)
                     {
-                        var componentString = _removeComponentStringBox.Value.ToLower();
+                        var componentString = _removeComponentStringBox.Value.ToLower() + "component";
                         var componentTypeToRemove = allComponentTypes.Find(t => t.Name.ToLower() == componentString);
 
                         if (componentTypeToRemove != null && _editing.HasComponent(componentTypeToRemove))
@@ -141,9 +178,24 @@ namespace DeftLib
                             SetEntity(_editing);
                         }
                     }
+                    else if (ActiveGadget == _viewComponentStringBox)
+                    {
+                        var componentString = _viewComponentStringBox.Value.ToLower() + "component";
+                        var componentTypeToView = allComponentTypes.Find(t => t.Name.ToLower() == componentString);
+
+                        if (componentTypeToView != null && _editing.HasComponent(componentTypeToView))
+                        {
+                            // Send old active component panel to the back
+                            if (_activeComponentPanel != null)
+                                _activeComponentPanel.SetLayer(this.layer + 1);
+
+                            // Bring new active component panel to the front
+                            _activeComponentPanel = GetGadget<Panel>(componentTypeToView.Name);
+                            _activeComponentPanel.SetLayer(FRONT_COMPONENT_PANEL_LAYER);
+                        }
+                    }
                 }
-            }
-            
+            }            
 
             // If update requested, sync the _editing Entity
             // with the values from all component panels
@@ -156,11 +208,27 @@ namespace DeftLib
 
         public override void Render(SpriteBatch spriteBatch)
         {
-            base.Render(spriteBatch);
+            base.RenderWithoutGadgets(spriteBatch);
+            RenderNonComponentPanelGadgets(spriteBatch);
 
-            // Render list of possible components if AddComponentStringBox is active
-            if (ActiveGadget == _addComponentStringBox || ActiveGadget == _removeComponentStringBox)
+            if (ActiveGadget == _addComponentStringBox)
                 RenderSideText(spriteBatch, AllComponentTypeNames, this);
+            else if (ActiveGadget == _removeComponentStringBox || ActiveGadget == _viewComponentStringBox)
+            {
+                if (_editing != null)
+                    RenderSideText(spriteBatch, EntityComponentTypeStrings(_editing), this);
+            }
+
+            if (_activeComponentPanel != null)
+                _activeComponentPanel.Render(spriteBatch);
         }
+
+        private List<String> EntityComponentTypeStrings(Entity e)
+        {
+            var result = new List<string>();
+            foreach (var c in e.ComponentList)
+                result.Add(c.GetType().Name);
+            return result;
+        } 
     }
 }

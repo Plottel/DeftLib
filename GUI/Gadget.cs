@@ -15,6 +15,9 @@ namespace DeftLib
         public Vector2 size;
         public string label;
 
+        public virtual void SetLayer(int newLayer)
+            => layer = newLayer;
+
         public Rectangle Bounds
         {
             get { return new Rectangle(pos.ToPoint(), size.ToPoint()); }

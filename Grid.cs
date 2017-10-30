@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 namespace DeftLib
 {
-    // TODO: Implement IEnumerable
     public class Grid<T> : IEnumerable<T>
     {
         private List<List<T>> _cells;

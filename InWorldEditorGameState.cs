@@ -42,13 +42,13 @@ namespace DeftLib
             var newMask = TileNeighbourDirection.None;
 
             // TODO: Fix crashes when changing tiles next to border.
-            if (grid[idx.Col() - 1, idx.Row()].srcTexture == tile.srcTexture)
+            if (IsNeighbour(tile, grid[idx.Col() - 1, idx.Row()]))
                 newMask |= TileNeighbourDirection.West;
-            if (grid[idx.Col() + 1, idx.Row()].srcTexture == tile.srcTexture)
+            if (IsNeighbour(tile, grid[idx.Col() + 1, idx.Row()]))
                 newMask |= TileNeighbourDirection.East;
-            if (grid[idx.Col(), idx.Row() - 1].srcTexture == tile.srcTexture)
+            if (IsNeighbour(tile, grid[idx.Col(), idx.Row() - 1]))
                 newMask |= TileNeighbourDirection.North;
-            if (grid[idx.Col(), idx.Row() + 1].srcTexture == tile.srcTexture)
+            if (IsNeighbour(tile, grid[idx.Col(), idx.Row() + 1]))
                 newMask |= TileNeighbourDirection.South;
 
             var textureName = Assets.GetTextureName(tile.srcTexture);
@@ -58,6 +58,14 @@ namespace DeftLib
                 textureName = textureName.Replace("tilemap", "");
                 tile.srcTextureRegion = Assets.GetTileMap(textureName)[newMask].srcTextureRegion;
             }
+        }
+
+        private bool IsNeighbour(Tile source, Tile potentialNeighbour)
+        {
+            if (source == null || potentialNeighbour == null)
+                return false;
+
+            return source.srcTexture == potentialNeighbour.srcTexture;
         }
 
         //
@@ -74,17 +82,19 @@ namespace DeftLib
             else if (Input.LeftMouseDown())
             {
                 if (_tileMapToPlace != null)
-                {
-                    // Change tile texture to match what's being placed.
-                    var worldTile = World.tileGrid.TileAt(Input.MousePos);
-                    worldTile.srcTexture = _tileMapToPlace.srcTexture;
-
-                    UpdateTextureRegionBasedOnNeighbours(worldTile);
-
-                    foreach (var neighbour in World.tileGrid.GetNESWNeighboursAroundTile(worldTile))
-                        UpdateTextureRegionBasedOnNeighbours(neighbour);
-                }
+                    UpdateLocalTileMaps(World.tileGrid.TileAt(Input.MousePos), _tileMapToPlace.srcTexture);
             }
+            else if (Input.RightMouseDown())
+                UpdateLocalTileMaps(World.tileGrid.TileAt(Input.MousePos), null);
+        }
+
+        private void UpdateLocalTileMaps(Tile changed, Texture2D newTexture)
+        {
+            changed.srcTexture = newTexture;
+            UpdateTextureRegionBasedOnNeighbours(changed);
+
+            foreach (var neighbour in World.tileGrid.GetNESWNeighboursAroundTile(changed))
+                UpdateTextureRegionBasedOnNeighbours(neighbour);
         }
 
         public override void Update(GameTime gameTime)
@@ -93,11 +103,11 @@ namespace DeftLib
 
         public override void Render(SpriteBatch spriteBatch)
         {
+            World.tileGrid.RenderGridLines(spriteBatch);
         }
 
         public override void RenderGUI(SpriteBatch spriteBatch)
         {
-            World.tileGrid.RenderGridLines(spriteBatch);
             _tilePanel.Render(spriteBatch);
         }
     }

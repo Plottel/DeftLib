@@ -18,7 +18,7 @@ namespace DeftLib
         public const int DEFAULT_HEIGHT = 300;
             
         private StringBox _openOriginalTileMapStringBox;
-
+        
         private List<Tile> _tiles;
         private Vector2 _tileStartPos;
 

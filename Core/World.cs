@@ -28,7 +28,7 @@ namespace DeftLib
             _gameStates = new Stack<GameState>();
             tileGrid = new TileGrid(new Vector2(0, 0), 45, 23);
 
-            _gameStates.Push(new InEditorGameState());
+            _gameStates.Push(new InEditorMenuGameState());
             CurrentGameState.Enter();
 
             programStatePanel = new ProgramStatePanel("Program State", new Vector2(1050, 10), new Vector2(300, 200));
@@ -65,10 +65,22 @@ namespace DeftLib
 
         public static void LoadWorld()
         {
-            entities.Clear();
+            if (!File.Exists("world.bin"))
+                return;
 
             using (BinaryReader reader = new BinaryReader(File.Open("world.bin", FileMode.Open)))
             {
+                LoadEntities(reader);
+                LoadTileGrid(reader);
+            }
+
+            Assets.LoadTileMaps();
+            Prototypes.LoadPrototypes();
+
+            #region Inner Load Methods
+            void LoadEntities(BinaryReader reader)
+            {
+                entities.Clear();
                 int numEntities = reader.ReadInt32();
 
                 for (int i = 0; i < numEntities; ++i)
@@ -79,12 +91,37 @@ namespace DeftLib
                 }
             }
 
-            Assets.LoadTileMaps();
+            void LoadTileGrid(BinaryReader reader)
+            {
+                Vector2 pos = reader.ReadVector2();
+                int cols = reader.ReadInt32();
+                int rows = reader.ReadInt32();
+
+                tileGrid = new TileGrid(pos, cols, rows);
+
+                for (int col = 0; col < cols; ++col)
+                {
+                    for (int row = 0; row < rows; ++row)
+                        tileGrid[col, row].Deserialize(reader);
+                }
+
+            }
+            #endregion Inner Load Methods
         }
 
         public static void SaveWorld()
         {
             using (BinaryWriter writer = new BinaryWriter(File.Open("world.bin", FileMode.OpenOrCreate)))
+            {
+                SaveEntities(writer);
+                SaveTileGrid(writer);
+            }
+
+            Assets.SaveTileMaps();
+            Prototypes.SavePrototypes();
+
+            #region Inner Save Methods
+            void SaveEntities(BinaryWriter writer)
             {
                 writer.Write(entities.Count);
 
@@ -92,7 +129,17 @@ namespace DeftLib
                     e.Serialize(writer);
             }
 
-            Assets.SaveTileMaps();
+            void SaveTileGrid(BinaryWriter writer)
+            {
+                writer.WriteVector2(tileGrid.Pos);
+                writer.Write(tileGrid.Cols);
+                writer.Write(tileGrid.Rows);
+
+                foreach (var tile in tileGrid)
+                    tile.Serialize(writer);
+
+            }
+            #endregion Inner Save Methods
         }        
        
         public static void HandleInput()
@@ -108,15 +155,16 @@ namespace DeftLib
 
         public static void Render(SpriteBatch spriteBatch)
         {
+            tileGrid.RenderTiles(spriteBatch);
+
+            ECSCore.Render(spriteBatch);
+
+            // TODO: Implement proper rendering ECS system
             foreach (var e in entities)
             {
                 var spatial = e.GetComponent<SpatialComponent>();
                 spriteBatch.FillRectangle(spatial.Bounds, Color.Blue);
             }
-
-            tileGrid.RenderTiles(spriteBatch);
-
-            ECSCore.Render(spriteBatch);
 
             CurrentGameState.Render(spriteBatch);
 
@@ -126,9 +174,6 @@ namespace DeftLib
             spriteBatch.DrawString(Deft.Font16, "Num Entities: " + entities.Count, new Vector2(800, 80), Color.Black);
 
             CurrentGameState.RenderGUI(spriteBatch);
-
-
-
         }
     }
 }

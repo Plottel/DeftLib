@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.IO;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+
 
 namespace DeftLib
 {
@@ -41,5 +43,25 @@ namespace DeftLib
 
         public void MoveBy(Vector2 amt)
             => pos += amt;
+
+        public void Serialize(BinaryWriter writer)
+        {
+            var srcTextureName = Assets.GetTextureName(srcTexture);
+
+            writer.Write(srcTextureName);
+            writer.WriteRectangle(srcTextureRegion);
+            writer.WriteVector2(pos);
+            writer.WriteVector2(size);
+        }
+
+        public void Deserialize(BinaryReader reader)
+        {
+            var srcTextureName = reader.ReadString();
+
+            srcTexture = Assets.GetTexture(srcTextureName);
+            srcTextureRegion = reader.ReadRectangle();
+            pos = reader.ReadVector2();
+            size = reader.ReadVector2();
+        }
     }
 }

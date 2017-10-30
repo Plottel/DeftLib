@@ -153,7 +153,6 @@ namespace DeftLib
             }
         }
 
-        // TODO : Implement IEnumerable and remove this method.
         public void RenderTiles(SpriteBatch spriteBatch)
         {
             foreach (var tile in this)

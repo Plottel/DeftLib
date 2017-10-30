@@ -9,8 +9,6 @@ using MonoGame.Extended;
 
 namespace DeftLib
 {
-    // TODO: This needs proper states.
-    // "Moving", "Resizing"
     public class SpatialComponentEditorTool : ComponentEditorTool
     {
         private enum ToolState
@@ -129,10 +127,10 @@ namespace DeftLib
         {
             if (_editing != null)
             {
-                spriteBatch.DrawRectangle(_editing.Bounds.GetInflated(2, 2), Color.Green, 2);
+                spriteBatch.DrawRectangle(_editing.Bounds.GetInflated(2, 2), TOOL_COLOR, 2);
 
                 foreach (var rect in _resizeRects)
-                    spriteBatch.FillRectangle(rect, Color.LawnGreen);
+                    spriteBatch.FillRectangle(rect, TOOL_COLOR);
             }
         }
     }

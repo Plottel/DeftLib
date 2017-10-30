@@ -10,7 +10,6 @@ using Microsoft.Xna.Framework.Input;
 namespace DeftLib
 {
     // TODO: Make mouse position relative to top-left corner of screen.
-    // TODO: Game crashes if i make a unit in same position twice without moving mouse.
 
 
 

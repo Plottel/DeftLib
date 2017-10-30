@@ -95,3 +95,10 @@ C:\Users\User\Desktop\DeftLib - Copy\bin\Windows\x86\Debug\Content\DirtTileMap.x
 C:\Users\User\Desktop\DeftLib - Copy\bin\Windows\x86\Debug\Content\TileMaps\DirtTileMap.xnb
 C:\Users\User\Desktop\DeftLib - Copy\bin\Windows\x86\Debug\Content\TileMaps\WaterTileMap.xnb
 C:\Users\User\Desktop\DeftLib - Copy\bin\Windows\x86\Debug\Content\TileMaps\MossyPathTileMap.xnb
+C:\Users\User\Desktop\DeftLib\bin\Windows\x86\Debug\Content\DirtTileMap.xnb
+C:\Users\User\Desktop\DeftLib\bin\Windows\x86\Debug\Content\font_6.xnb
+C:\Users\User\Desktop\DeftLib\bin\Windows\x86\Debug\Content\font_8.xnb
+C:\Users\User\Desktop\DeftLib\bin\Windows\x86\Debug\Content\TileMapDragAndDropGadgets.xnb
+C:\Users\User\Desktop\DeftLib\bin\Windows\x86\Debug\Content\TileMaps\DirtTileMap.xnb
+C:\Users\User\Desktop\DeftLib\bin\Windows\x86\Debug\Content\TileMaps\MossyPathTileMap.xnb
+C:\Users\User\Desktop\DeftLib\bin\Windows\x86\Debug\Content\TileMaps\WaterTileMap.xnb
