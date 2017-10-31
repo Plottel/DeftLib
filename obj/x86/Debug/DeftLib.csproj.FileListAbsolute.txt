@@ -109,3 +109,12 @@ C:\Users\Matt\Desktop\DeftLib\bin\Windows\x86\Debug\Content\TileMapDragAndDropGa
 C:\Users\Matt\Desktop\DeftLib\bin\Windows\x86\Debug\Content\TileMaps\DirtTileMap.xnb
 C:\Users\Matt\Desktop\DeftLib\bin\Windows\x86\Debug\Content\TileMaps\MossyPathTileMap.xnb
 C:\Users\Matt\Desktop\DeftLib\bin\Windows\x86\Debug\Content\TileMaps\WaterTileMap.xnb
+C:\Users\User\Desktop\DeftLib\bin\Windows\x86\Debug\NUnit3.TestAdapter.dll
+C:\Users\User\Desktop\DeftLib\bin\Windows\x86\Debug\nunit.engine.dll
+C:\Users\User\Desktop\DeftLib\bin\Windows\x86\Debug\nunit.engine.api.dll
+C:\Users\User\Desktop\DeftLib\bin\Windows\x86\Debug\Mono.Cecil.dll
+C:\Users\User\Desktop\DeftLib\bin\Windows\x86\Debug\Mono.Cecil.Pdb.dll
+C:\Users\User\Desktop\DeftLib\bin\Windows\x86\Debug\Mono.Cecil.Mdb.dll
+C:\Users\User\Desktop\DeftLib\bin\Windows\x86\Debug\Mono.Cecil.Rocks.dll
+C:\Users\User\Desktop\DeftLib\bin\Windows\x86\Debug\nunit.framework.dll
+C:\Users\User\Desktop\DeftLib\bin\Windows\x86\Debug\nunit.framework.xml

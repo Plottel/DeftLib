@@ -135,7 +135,7 @@ namespace DeftLib
             _components[typeof(T)].owner = this;
         }
 
-        public void RemoveComponent<T>(Component component)
+        public void RemoveComponent<T>()
         {
             var componentType = typeof(T);
 
