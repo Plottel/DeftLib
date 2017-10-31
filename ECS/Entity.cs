@@ -91,30 +91,48 @@ namespace DeftLib
 
         public bool HasComponent(Type t)
         {
-            return _components.ContainsKey(t);
+            if (_components.ContainsKey(t))
+                return true;
+
+            // If dont have exact one, check if subclass.
+            // TODO: Rethink the whole system here.
+            foreach (var c in _components)
+            {
+                if (t.IsAssignableFrom(c.Key))
+                    return true;
+            }
+
+            return false;
         }
 
         public void ReplaceComponent(Component component)
         {
             if (_components.ContainsKey(component.GetType()))
+            {
                 _components[component.GetType()] = component;
+                component.owner = this;
+            }
+                
         }
 
         public void AddComponent<T>(Component component) where T : Component
         {
             _components.Add(typeof(T), component);
+            component.owner = this;
             UpdateEntitySystemPlacementAfterComponentChange();
         }
 
         public void AddComponent(Component component)
         {
             _components[component.GetType()] = component;
+            component.owner = this;
             UpdateEntitySystemPlacementAfterComponentChange();
         }
 
         public void AddComponent<T>() where T : Component
         {
             _components[typeof(T)] = (T)Activator.CreateInstance(typeof(T));
+            _components[typeof(T)].owner = this;
         }
 
         public void RemoveComponent<T>(Component component)

@@ -11,7 +11,7 @@ namespace DeftLib
 {
     public class ComponentPanel<T> : Panel where T : Component
     {
-        private FieldInfo[] _componentFields;
+        private List<FieldInfo> _componentFields;
 
         public const int DEFAULT_WIDTH = 250;
         public const int DEFAULT_HEIGHT = 200;
@@ -30,7 +30,9 @@ namespace DeftLib
         public ComponentPanel(string label, Vector2 pos, Vector2 size, int layer) :
             base(label, pos, size, layer)
         {
-            _componentFields = typeof(T).GetFields();
+            _componentFields = new List<FieldInfo>(typeof(T).GetFields());
+            _componentFields.RemoveAll(field => field.Name == "owner");
+
 
             RepopulateGadgets();
             

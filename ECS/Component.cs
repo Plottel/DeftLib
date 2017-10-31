@@ -10,6 +10,8 @@ namespace DeftLib
 {
     public abstract class Component
     {
+        public Entity owner;
+
         public abstract void Serialize(BinaryWriter writer);
         public abstract void Deserialize(BinaryReader reader);
 
@@ -20,7 +22,10 @@ namespace DeftLib
             var cType = this.GetType();
             var c = (Component)Activator.CreateInstance(cType);
 
-            foreach (var field in cType.GetFields(System.Reflection.BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance))
+            var fields = cType.GetFields(System.Reflection.BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance).ToList();
+            fields.RemoveAll(field => field.Name == "owner");
+
+            foreach (var field in fields)
                 field.SetValue(c, field.GetValue(this));
 
             return c;

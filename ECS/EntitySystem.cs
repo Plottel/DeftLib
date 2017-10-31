@@ -11,6 +11,11 @@ namespace DeftLib
         private Type[] _requiredComponents;
         protected List<Entity> _entities = new List<Entity>();
 
+        public int EntityCount
+        {
+            get { return _entities.Count; }
+        }
+
         public EntitySystem(params Type[] requiredComponents)
             => _requiredComponents = requiredComponents;
 

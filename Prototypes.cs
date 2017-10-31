@@ -16,9 +16,9 @@ namespace DeftLib
 
         public static Entity Create(string prototypeName, Vector2 pos)
         {
-            if (_prototypes.ContainsKey(prototypeName))
+            if (_prototypes.ContainsKey(prototypeName.ToLower()))
             {
-                Entity e = _prototypes[prototypeName].Copy();
+                Entity e = _prototypes[prototypeName.ToLower()].Copy();
                 e.GetComponent<SpatialComponent>().pos = pos;
 
                 return e;
@@ -28,7 +28,7 @@ namespace DeftLib
         }
 
         public static void AddPrototype(string prototypeName, Entity prototype)
-            => _prototypes[prototypeName] = prototype.Copy();
+            => _prototypes[prototypeName.ToLower()] = prototype.Copy();
 
         public static List<string> AllPrototypeNames
         {
@@ -65,7 +65,7 @@ namespace DeftLib
 
                 for (int i = 0; i < numPrototypes; ++i)
                 {
-                    string name = reader.ReadString();
+                    string name = reader.ReadString().ToLower();
                     Entity e = new Entity();
                     e.Deserialize(reader);
 

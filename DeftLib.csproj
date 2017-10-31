@@ -42,9 +42,11 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Assets.cs" />
+    <Compile Include="CollisionSystem.cs" />
     <Compile Include="ComponentEditorTool.cs" />
     <Compile Include="ECS\ECSCore.cs" />
     <Compile Include="ECS\EntitySystem.cs" />
+    <Compile Include="FireballCollisionComponent.cs" />
     <Compile Include="GameState.cs" />
     <Compile Include="Grid.cs" />
     <Compile Include="GUI\Button.cs" />
@@ -58,6 +60,7 @@
     <Compile Include="GUI\FloatBox.cs" />
     <Compile Include="GUI\Gadget.cs" />
     <Compile Include="GUI\GUIEventHub.cs" />
+    <Compile Include="CollisionComponent.cs" />
     <Compile Include="InEditorMenuGameState.cs" />
     <Compile Include="InEntityEditorGameState.cs" />
     <Compile Include="InGamePlayGameState.cs" />

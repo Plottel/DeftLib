@@ -88,6 +88,7 @@ namespace DeftLib
                     Entity newEntity = new Entity();
                     newEntity.Deserialize(reader);
                     entities.Add(newEntity);
+                    ECSCore.PlaceEntityInSystems(newEntity);
                 }
             }
 

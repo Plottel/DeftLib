@@ -26,7 +26,9 @@ namespace DeftLib
                 for (int i = physics.ActiveForces.Count - 1; i >= 0; --i)
                 {
                     physics.velocity += physics.ActiveForces[i]; // Take MASS and DELTATIME into account
-                    physics.ActiveForces[i] *= 0.9f; // Decay acceleration - FIX SCALE
+
+                    var accelReductionVector = (physics.ActiveForces[i] * -1) * 0.9f;
+                    physics.ActiveForces[i] += accelReductionVector;
 
                     // Kill acceleration if it has decayed below a threshold
                     if (physics.ActiveForces[i].Length() < 1) // 1 == threshold - pick a new one if needed.
@@ -36,7 +38,11 @@ namespace DeftLib
                 if (physics.velocity != Vector2.Zero)
                 {
                     // Reduce velocity according to drag
-                    physics.velocity *= 1 / physics.drag; // FIX FORMULA
+                    //physics.velocity *= 1 / physics.drag; // FIX FORMULA
+                    var dragVector = physics.velocity * -1;
+                    dragVector *= 0.05f;
+
+                    physics.velocity += dragVector;
 
                     // Move the entity according to resultant velocity
                     spatial = entity.GetComponent<SpatialComponent>();

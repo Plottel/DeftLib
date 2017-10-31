@@ -25,6 +25,7 @@ namespace DeftLib
             _nextID = 1;
 
             SubscribeSystem(new PhysicsSystem());
+            SubscribeSystem(new CollisionSystem());
         }
 
         public static ulong NextEntityID
@@ -82,6 +83,11 @@ namespace DeftLib
         {
             foreach (var s in _renderingEntitySystems)
                 s.Process();
+
+            // Find collision system, print how may subscribed entities
+            var colSys = _entitySystems.Find(s => s.GetType() == typeof(CollisionSystem));
+
+            spriteBatch.DrawString(Deft.Font16, "Num Collision Entities: " + colSys.EntityCount.ToString(), new Vector2(600, 600), Color.Black);
         }
     }
 }
