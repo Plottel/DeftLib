@@ -26,7 +26,7 @@ namespace DeftLib
         public InEntityEditorGameState()
         {
             _editorTools[typeof(SpatialComponent)] = new SpatialComponentEditorTool();
-            _editorTools[typeof(MovementComponent)] = new MovementComponentEditorTool();
+            _editorTools[typeof(PhysicsComponent)] = new PhysicsComponentEditorTool();
         }
 
         private ComponentEditorTool ActiveTool

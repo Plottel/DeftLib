@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 namespace DeftLib
 {
@@ -23,6 +24,17 @@ namespace DeftLib
         {
             if (World.programStatePanel.GetGadget<Button>("Stop Scene").IsClicked)
                 World.PopState();
+
+            if (Input.KeyTyped(Keys.F))
+            {
+                foreach (Entity e in World.entities)
+                {
+                    var physics = e.GetComponent<PhysicsComponent>();
+
+                    if (physics != null)
+                        physics.AddForce(new Vector2(0.1f, 0.1f));
+                }
+            }
         }
 
         public override void Update(GameTime gameTime)

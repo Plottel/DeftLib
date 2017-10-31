@@ -24,7 +24,7 @@ namespace DeftLib
 
             _nextID = 1;
 
-            SubscribeSystem(new MovementSystem());
+            SubscribeSystem(new PhysicsSystem());
         }
 
         public static ulong NextEntityID
