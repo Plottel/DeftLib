@@ -52,7 +52,6 @@ namespace DeftTesting
             First.AddComponent<SpatialComponent>(spatial);
             First.RemoveComponent<SpatialComponent>();
             Assert.IsFalse(First.HasComponent<SpatialComponent>());
-
         }
     }
 }

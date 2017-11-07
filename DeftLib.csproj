@@ -44,58 +44,65 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Assets.cs" />
-    <Compile Include="CollisionSystem.cs" />
-    <Compile Include="ComponentEditorTool.cs" />
-    <Compile Include="ECS\ECSCore.cs" />
-    <Compile Include="ECS\EntitySystem.cs" />
-    <Compile Include="FireballCollisionComponent.cs" />
-    <Compile Include="GameState.cs" />
-    <Compile Include="Grid.cs" />
-    <Compile Include="GUI\Button.cs" />
-    <Compile Include="ECS\Component.cs" />
-    <Compile Include="GUI\ComponentPanel.cs" />
-    <Compile Include="Core\Deft.cs" />
-    <Compile Include="ECS\Entity.cs" />
-    <Compile Include="GUI\EntityPanel.cs" />
-    <Compile Include="ExtensionMethods.cs" />
-    <Compile Include="GUI\FieldGadget.cs" />
-    <Compile Include="GUI\FloatBox.cs" />
-    <Compile Include="GUI\Gadget.cs" />
-    <Compile Include="GUI\GUIEventHub.cs" />
-    <Compile Include="CollisionComponent.cs" />
-    <Compile Include="InEditorMenuGameState.cs" />
-    <Compile Include="InEntityEditorGameState.cs" />
-    <Compile Include="InGamePlayGameState.cs" />
-    <Compile Include="InPrototypeEditorGameState.cs" />
-    <Compile Include="Input\Input.cs" />
-    <Compile Include="GUI\InputBox.cs" />
-    <Compile Include="GUI\IntBox.cs" />
-    <Compile Include="ECS\PhysicsComponent.cs" />
-    <Compile Include="GUI\Panel.cs" />
-    <Compile Include="ECS\SpatialComponent.cs" />
-    <Compile Include="GUI\StringBox.cs" />
-    <Compile Include="Input\InputTextParser.cs" />
-    <Compile Include="ECS\IRenderingSystem.cs" />
-    <Compile Include="ECS\PhysicsSystem.cs" />
-    <Compile Include="InTileMapEditorGameState.cs" />
-    <Compile Include="GUI\TileMapEditor\OriginalImageTileMapEditorPanel.cs" />
-    <Compile Include="InWorldEditorGameState.cs" />
-    <Compile Include="PhysicsComponentEditorTool.cs" />
+    <Compile Include="Scene.cs" />
+    <Compile Include="src\Assets.cs" />
+    <Compile Include="src\GUI\ComponentEditorTools\CollisionComponentEditorTool.cs" />
+    <Compile Include="src\ECS\Systems\CollisionSystem.cs" />
+    <Compile Include="src\GUI\ComponentEditorTools\ComponentEditorTool.cs" />
+    <Compile Include="src\GUI\ComponentEditorTools\ComponentEditorToolManager.cs" />
+    <Compile Include="src\Core\ECSCore.cs" />
+    <Compile Include="src\ECS\EntitySystem.cs" />
+    <Compile Include="src\ECS\Entities\Fireball.cs" />
+    <Compile Include="src\Core\GameStates\GameState.cs" />
+    <Compile Include="src\DataStructures\Grid.cs" />
+    <Compile Include="src\GUI\Button.cs" />
+    <Compile Include="src\ECS\Component.cs" />
+    <Compile Include="src\GUI\PrototypeEditor\ComponentPanel.cs" />
+    <Compile Include="src\Core\Deft.cs" />
+    <Compile Include="src\ECS\Entity.cs" />
+    <Compile Include="src\GUI\PrototypeEditor\EntityPanel.cs" />
+    <Compile Include="src\ExtensionMethods.cs" />
+    <Compile Include="src\GUI\FieldGadgets\FieldGadget.cs" />
+    <Compile Include="src\GUI\FieldGadgets\FloatBox.cs" />
+    <Compile Include="src\GUI\Gadget.cs" />
+    <Compile Include="src\Core\GUIEventHub.cs" />
+    <Compile Include="src\ECS\Components\CollisionComponent.cs" />
+    <Compile Include="src\Core\GameStates\InEditorMenuGameState.cs" />
+    <Compile Include="src\Core\GameStates\InEntityEditorGameState.cs" />
+    <Compile Include="src\Core\GameStates\InGamePlayGameState.cs" />
+    <Compile Include="src\Core\GameStates\InPrototypeEditorGameState.cs" />
+    <Compile Include="src\Input\Input.cs" />
+    <Compile Include="src\GUI\FieldGadgets\InputBox.cs" />
+    <Compile Include="src\GUI\FieldGadgets\IntBox.cs" />
+    <Compile Include="src\ECS\Components\PhysicsComponent.cs" />
+    <Compile Include="src\GUI\Panel.cs" />
+    <Compile Include="src\ECS\Components\SpatialComponent.cs" />
+    <Compile Include="src\GUI\FieldGadgets\StringBox.cs" />
+    <Compile Include="src\Input\InputTextParser.cs" />
+    <Compile Include="src\ECS\Systems\IRenderingSystem.cs" />
+    <Compile Include="src\ECS\Systems\PhysicsSystem.cs" />
+    <Compile Include="src\Core\GameStates\InTileMapEditorGameState.cs" />
+    <Compile Include="src\GUI\TileMapEditor\OriginalImageTileMapEditorPanel.cs" />
+    <Compile Include="src\Core\GameStates\InWorldEditorGameState.cs" />
+    <Compile Include="src\GUI\ComponentEditorTools\PhysicsComponentEditorTool.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="ECS\ProgramStatePanel.cs" />
+    <Compile Include="src\Core\ProgramStatePanel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="GUI\Vector2Panel.cs" />
-    <Compile Include="Core\World.cs" />
-    <Compile Include="PrototypeInstantiationPanel.cs" />
-    <Compile Include="Prototypes.cs" />
-    <Compile Include="PrototypeConstructionPanel.cs" />
-    <Compile Include="SpatialComponentEditorTool.cs" />
-    <Compile Include="Graphics\Tile.cs" />
-    <Compile Include="GUI\TileMapEditor\TileMapEditorPanel.cs" />
-    <Compile Include="TileGrid.cs" />
-    <Compile Include="TileNeighbourDirection.cs" />
-    <Compile Include="WorldEditorTileMapPanel.cs" />
+    <Compile Include="src\GUI\FieldGadgets\Vector2Panel.cs" />
+    <Compile Include="src\Core\SceneManager.cs" />
+    <Compile Include="src\GUI\PrototypeEditor\PrototypeInstantiationPanel.cs" />
+    <Compile Include="src\Core\Prototypes.cs" />
+    <Compile Include="src\GUI\PrototypeEditor\PrototypeConstructionPanel.cs" />
+    <Compile Include="src\GUI\FieldGadgets\RectanglePanel.cs" />
+    <Compile Include="src\GUI\ComponentEditorTools\SpatialComponentEditorTool.cs" />
+    <Compile Include="src\TileMaps\Tile.cs" />
+    <Compile Include="src\GUI\TileMapEditor\TileMapEditorPanel.cs" />
+    <Compile Include="src\GUI\FieldGadgets\TextureInputBox.cs" />
+    <Compile Include="src\ECS\Components\TextureRendererComponent.cs" />
+    <Compile Include="src\TileMaps\TileGrid.cs" />
+    <Compile Include="src\TileMaps\TileNeighbourDirection.cs" />
+    <Compile Include="src\GUI\TileMapEditor\WorldEditorTileMapPanel.cs" />
+    <Compile Include="TextureRenderingSystem.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
@@ -116,6 +123,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Icon.ico" />
+    <Content Include="Scenes\scenes.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <MonoGameContentReference Include="Content\Content.mgcb" />

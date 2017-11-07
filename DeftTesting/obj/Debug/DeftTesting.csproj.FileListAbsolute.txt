@@ -52,3 +52,6 @@ C:\Users\User\Desktop\DeftLib\DeftTesting\bin\Debug\SharpDX.Direct2D1.xml
 C:\Users\User\Desktop\DeftLib\DeftTesting\bin\Debug\SharpDX.XInput.xml
 C:\Users\User\Desktop\DeftLib\DeftTesting\bin\Debug\Newtonsoft.Json.xml
 C:\Users\User\Desktop\DeftLib\DeftTesting\bin\Debug\SharpDX.Direct3D9.xml
+C:\Users\User\Desktop\DeftLib\DeftTesting\bin\Debug\Content\Textures\DefaultTexture.xnb
+C:\Users\User\Desktop\DeftLib\DeftTesting\bin\Debug\Content\Textures\Fireball.xnb
+C:\Users\User\Desktop\DeftLib\DeftTesting\bin\Debug\Scenes\scenes.txt
