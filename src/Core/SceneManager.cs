@@ -135,6 +135,12 @@ namespace DeftLib
 
         public static void LoadWorld()
         {
+            if (_currentScene != null)
+                _currentScene.Exit();
+            _currentScene = null;
+            scenes.Clear();
+
+
             var allSceneNames = Directory.GetFiles("Scenes/", "*.bin").Select(Path.GetFileNameWithoutExtension);
 
             foreach (var sceneName in allSceneNames)
@@ -168,6 +174,18 @@ namespace DeftLib
        
         public static void HandleInput()
         {
+            float test;
+            string good = "0.5";
+            string bad = "0.";
+
+            if (!float.TryParse(good, out test))
+                throw new Exception();
+
+            if (!float.TryParse(bad, out test))
+                throw new Exception();
+
+
+
             GUIEventHub.OnGUIEvent();
             CurrentGameState.HandleInput();
         }
@@ -177,7 +195,6 @@ namespace DeftLib
             CurrentGameState.Update(gameTime);
 
             // At the end of each tick, process all destruction requests.
-
 
             // TODO: Reincorporate destruction requests
             //foreach (var e in toBeDestroyed)

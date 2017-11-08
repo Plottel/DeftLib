@@ -10,16 +10,27 @@ namespace DeftLib
 {
     public class CollisionComponent : Component
     {
-        public Rectangle HitBox;
+        public Vector2 offset;
+        public Vector2 size;
+
+        public Rectangle HitBox
+        {
+            get
+            {
+                return new Rectangle((owner.Spatial.pos + offset).ToPoint(), size.ToPoint());
+            }
+        }
 
         public override void Deserialize(BinaryReader reader)
         {
-            HitBox = reader.ReadRectangle();
+            offset = reader.ReadVector2();
+            size = reader.ReadVector2();
         }
 
         public override void Serialize(BinaryWriter writer)
         {
-            writer.WriteRectangle(HitBox);
+            writer.WriteVector2(offset);
+            writer.WriteVector2(size);
         }
     }
 }

@@ -22,6 +22,7 @@ namespace DeftLib
             SubscribeSystem(new PhysicsSystem());
             SubscribeSystem(new CollisionSystem());
             SubscribeSystem(new TextureRenderingSystem());
+            SubscribeSystem(new RectangleRenderingSystem());
         }
 
         public static void SubscribeEntity(Entity e)
@@ -38,6 +39,33 @@ namespace DeftLib
             foreach (var system in _renderingEntitySystems)
             {
                 if (system.CanOperateOnEntity(e))
+                    system.SubscribeEntity(e);
+            }
+        }
+
+        public static void UpdateEntitySystemPlacement(Entity e)
+        {
+            if (e == null) return;
+
+            foreach (var system in _entitySystems)
+            {
+                if (system.HasEntity(e))
+                {
+                    if (!system.CanOperateOnEntity(e))
+                        system.UnsubscribeEntity(e);
+                }
+                else if (system.CanOperateOnEntity(e))
+                    system.SubscribeEntity(e);
+            }
+
+            foreach (var system in _renderingEntitySystems)
+            {
+                if (system.HasEntity(e))
+                {
+                    if (!system.CanOperateOnEntity(e))
+                        system.UnsubscribeEntity(e);
+                }
+                else if (system.CanOperateOnEntity(e))
                     system.SubscribeEntity(e);
             }
         }

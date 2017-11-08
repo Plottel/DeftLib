@@ -13,7 +13,7 @@ namespace DeftLib
     public abstract class InputBox<T> : FieldGadget<T>
     {
         public const int DEFAULT_HEIGHT = 30;
-        public const int DEFAULT_WIDTH = 150;
+        public const int DEFAULT_WIDTH = 170;
 
         private Rectangle _inputRect;
         protected string _text;
@@ -32,9 +32,9 @@ namespace DeftLib
             base(label, pos, size, layer)
         {
             _inputRect = Rectangle.Empty;
-            _inputRect.Width = (int)size.X / 2;
+            _inputRect.Width = (int)size.X - 100;
             _inputRect.Height = (int)size.Y - 10;
-            _inputRect.X = (int)(pos.X + size.X - _inputRect.Width - 5);
+            _inputRect.X = (int)(pos.X + 90);
             _inputRect.Y = (int)(pos.Y + 5);
 
             _text = "";
@@ -50,7 +50,7 @@ namespace DeftLib
         {
             base.MoveTo(newPos);
 
-            _inputRect.X = (int)(newPos.X + size.X - _inputRect.Width - 5);
+            _inputRect.X = (int)(pos.X + 90);
             _inputRect.Y = (int)(newPos.Y + 5);
         }
 
@@ -64,7 +64,6 @@ namespace DeftLib
         {
             if (Input.KeyTyped(Keys.Delete))
                 _text = "";
-
 
             if (Input.KeyTyped(Keys.Back) && _text.Length > 0)
                 _text = _text.Remove(_text.Length - 1);

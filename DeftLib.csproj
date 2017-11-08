@@ -44,15 +44,25 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Scene.cs" />
-    <Compile Include="src\Assets.cs" />
+    <Compile Include="GameCode\ComponentTemplate.cs" />
+    <Compile Include="GameCode\SpinComponent.cs" />
+    <Compile Include="GameCode\SpinSystem.cs" />
+    <Compile Include="src\GUI\FieldGadgets\ByteBox.cs" />
+    <Compile Include="src\GUI\FieldGadgets\ColorPanel.cs" />
+    <Compile Include="src\ECS\Systems\RectangleRenderingSystem.cs" />
+    <Compile Include="src\ECS\Components\RectangleRendererComponent.cs" />
+    <Compile Include="src\GUI\ShieldButton.cs" />
+    <Compile Include="src\GUI\FieldGadgets\BoolBox.cs" />
+    <Compile Include="GameCode\Player.cs" />
+    <Compile Include="src\Core\Scene.cs" />
+    <Compile Include="src\Utils\Assets.cs" />
     <Compile Include="src\GUI\ComponentEditorTools\CollisionComponentEditorTool.cs" />
     <Compile Include="src\ECS\Systems\CollisionSystem.cs" />
     <Compile Include="src\GUI\ComponentEditorTools\ComponentEditorTool.cs" />
     <Compile Include="src\GUI\ComponentEditorTools\ComponentEditorToolManager.cs" />
     <Compile Include="src\Core\ECSCore.cs" />
     <Compile Include="src\ECS\EntitySystem.cs" />
-    <Compile Include="src\ECS\Entities\Fireball.cs" />
+    <Compile Include="GameCode\Fireball.cs" />
     <Compile Include="src\Core\GameStates\GameState.cs" />
     <Compile Include="src\DataStructures\Grid.cs" />
     <Compile Include="src\GUI\Button.cs" />
@@ -61,7 +71,7 @@
     <Compile Include="src\Core\Deft.cs" />
     <Compile Include="src\ECS\Entity.cs" />
     <Compile Include="src\GUI\PrototypeEditor\EntityPanel.cs" />
-    <Compile Include="src\ExtensionMethods.cs" />
+    <Compile Include="src\Utils\ExtensionMethods.cs" />
     <Compile Include="src\GUI\FieldGadgets\FieldGadget.cs" />
     <Compile Include="src\GUI\FieldGadgets\FloatBox.cs" />
     <Compile Include="src\GUI\Gadget.cs" />
@@ -102,7 +112,9 @@
     <Compile Include="src\TileMaps\TileGrid.cs" />
     <Compile Include="src\TileMaps\TileNeighbourDirection.cs" />
     <Compile Include="src\GUI\TileMapEditor\WorldEditorTileMapPanel.cs" />
-    <Compile Include="TextureRenderingSystem.cs" />
+    <Compile Include="src\ECS\Systems\TextureRenderingSystem.cs" />
+    <Compile Include="GameCode\UserSetup.cs" />
+    <Compile Include="GameCode\SystemTemplate.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
@@ -132,7 +144,9 @@
     <None Include="app.manifest" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="src\ECS\Entities\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Content.Builder.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

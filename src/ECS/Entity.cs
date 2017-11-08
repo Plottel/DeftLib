@@ -12,18 +12,33 @@ namespace DeftLib
     {
         private Dictionary<Type, Component> _components = new Dictionary<Type, Component>();
 
+        #region Entity User Definable Methods
+
         /// <summary>
-        /// This region represents all the methods which can be overridden in a child entity class.
+        /// The standard collision function for an Entity.
+        /// Applies basic physics according to respective physicsComponents
         /// </summary>
-        /// 
+        /// <param name="collidedWith"></param>
+        public virtual void OnCollision(Entity collidedWith)
+        {
+            if (this.HasComponent<PhysicsComponent>() && collidedWith.HasComponent<PhysicsComponent>())
+            {
+                var thisPhysics = GetComponent<PhysicsComponent>();
+                var thatPhysics = collidedWith.GetComponent<PhysicsComponent>();
 
+                // This applies force to that.
+                // Get vector this.Mid -> that.Mid
+                // Apply force to that based on this.Velocity and MASS // TODO: Add mass.
+                var forceDirection = Vector2.Normalize(collidedWith.Spatial.MidVector - this.Spatial.MidVector);
+                thatPhysics.AddForce(forceDirection * thisPhysics.velocity * thisPhysics.mass); // F = MV (mass * velocity)
+            }
+        }
 
-        public virtual void OnCollision(Entity collidedWith) { }
 
         public virtual void Update(GameTime gameTime) { }
 
 
-
+        #endregion Entity User Definable Methods
         public Entity Copy()
         {
             var copy = (Entity)Activator.CreateInstance(this.GetType());
@@ -171,7 +186,7 @@ namespace DeftLib
 
         private void UpdateEntitySystemPlacementAfterComponentChange()
         {
-            ECSCore.SubscribeEntity(this);
+            ECSCore.UpdateEntitySystemPlacement(this);
         }
     }
 }

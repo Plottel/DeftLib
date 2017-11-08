@@ -10,15 +10,11 @@ namespace DeftLib
 {
     public class PhysicsComponent : Component
     {
-
-
-
-
-
         private List<Vector2> _activeForces = new List<Vector2>();
         public Vector2 velocity = Vector2.Zero;
         public float mass;
         public float drag;
+        public bool canReceiveForces;        
 
         public List<Vector2> ActiveForces
         {
@@ -26,13 +22,17 @@ namespace DeftLib
         }
 
         public void AddForce(Vector2 force)
-            => _activeForces.Add(force);
+        {
+            if (canReceiveForces)
+                _activeForces.Add(force);
+        }
 
         public override void Serialize(BinaryWriter writer)
         {
             writer.WriteVector2(velocity);
             writer.Write(mass);
             writer.Write(drag);
+            writer.Write(canReceiveForces);
         }
 
         public override void Deserialize(BinaryReader reader)
@@ -40,6 +40,7 @@ namespace DeftLib
             velocity = reader.ReadVector2();
             mass = reader.ReadSingle();
             drag = reader.ReadSingle();
+            canReceiveForces = reader.ReadBoolean();
         }
     }
 }

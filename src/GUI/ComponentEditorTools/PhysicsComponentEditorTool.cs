@@ -30,7 +30,7 @@ namespace DeftLib
             {
                 _movementVector = Input.MousePos - _spatial.MidVector;
                 _movementVector.Normalize();
-                //_physics.direction = _movementVector;
+                _physics.velocity = _movementVector;
             }
         }
 

@@ -24,7 +24,8 @@ namespace DeftLib
             if (_prototypes.ContainsKey(prototypeName.ToLower()))
             {
                 Entity e = _prototypes[prototypeName.ToLower()].Copy();
-                e.GetComponent<SpatialComponent>().pos = pos;
+                e.Spatial.pos = Vector2.Zero;
+                e.Spatial.MoveBy(pos); // Move to proposed location, updating hit box.
                 SceneManager.AddEntity(e);
 
                 return e;
@@ -66,6 +67,16 @@ namespace DeftLib
                 _prototypes.Remove(prototypeName.ToLower());
         }
 
+        public static List<string> AllPrototypeNamesUpper
+        {
+            get
+            {
+                var nonUpper = AllPrototypeNames;
+                for (int i = nonUpper.Count - 1; i >= 0; --i)
+                    nonUpper[i] = nonUpper[i].ToUpper();
+                return nonUpper;
+            }
+        }
 
         public static List<string> AllPrototypeNames
         {

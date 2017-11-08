@@ -118,13 +118,14 @@ namespace DeftLib
                 HB.Height += (int)dy;
             }
 
-            _editing.HitBox = HB;
+            _editing.offset = HB.Location.ToVector2() - _editing.owner.Spatial.pos;
+            _editing.size = HB.Size.ToVector2();
         }
 
         private void HandleMove()
         {
             if (_editing.HitBox.Contains(Input.MousePos))
-                _editing.HitBox.Location += Input.DeltaMousePos.ToPoint();
+                _editing.offset += Input.DeltaMousePos;
         }
 
         public override void RenderGUI(SpriteBatch spriteBatch)

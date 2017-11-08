@@ -19,7 +19,7 @@ namespace DeftLib
 
         private Vector2 _componentPanelPos;
         private Panel _activeComponentPanel;
-
+        
         public const int DEFAULT_WIDTH = 300;
         public const int DEFAULT_HEIGHT = 600;
 
@@ -65,6 +65,7 @@ namespace DeftLib
                                      where typeof(Component).IsAssignableFrom(assemblyType)
                                      select assemblyType).ToList();
             allComponentTypes.Remove(typeof(Component));
+            allComponentTypes.Remove(typeof(ComponentTemplate));
 
             _componentPanelPos = NextGadgetAt + new Vector2(0, 20);
         }
@@ -87,13 +88,18 @@ namespace DeftLib
             foreach (var componentTypePair in e.ComponentMap)
                 AddAndSyncComponentPanel(componentTypePair);
 
+            //
+            //
+            // NOTE: STRANGE BEHAVIOUR WITH COMPONENT PANELS CAN BE ATTRIBUTED TO THIS SECTION.
+            // Specifically not being able to go more than 1 layer deep with Gadget selection
+            //
+
             // Change active component panel if resetting to a new Entity
             if (_editing != e)
             {
                 // Reset active component panel back to original layer
                 //if (_activeComponentPanel != null)
                     //_activeComponentPanel.SetLayer(this.layer + 1);
-                
                 _activeComponentPanel = GetGadget<Panel>("SpatialComponent");
                 _activeComponentPanel.SetLayer(FRONT_COMPONENT_PANEL_LAYER);
             }
@@ -194,7 +200,8 @@ namespace DeftLib
                             var colComp = newComponent as CollisionComponent;
                             if (colComp != null)
                             {
-                                colComp.HitBox = _editing.Spatial.Bounds;
+                                colComp.offset = Vector2.Zero;
+                                colComp.size = _editing.Spatial.size;
                                 _editing.AddComponent(colComp);
                             }
                             else                             

@@ -26,7 +26,39 @@ namespace DeftLib
         public override void SyncGadget(object toAttach)
         {
             float f = (float)toAttach;
-            Text = f.ToString();
+
+            bool applyDecimalSuffix = false;
+            var decimalSuffix = "";
+
+            //// If the chars immediately after a "." are zeros, let them concatenate
+            if (Text.Contains('.'))
+            {
+                applyDecimalSuffix = true;
+                int dotIndex = Text.IndexOf('.');
+                decimalSuffix += ".";
+
+                // If there are characters after the dot
+                if (dotIndex < Text.Length - 1)
+                {
+                    for (int i = dotIndex + 1; i < Text.Length; ++i)
+                    {
+                        if (Text[i] == '0')
+                        {
+                            decimalSuffix += "0";
+                        }
+                        else // There are characters after zeros after decimal, the float will parse normally.
+                        {
+                            applyDecimalSuffix = false;
+                            break;
+                        }
+                    }
+                }
+            }
+
+            if (applyDecimalSuffix)
+                Text = f.ToString() + decimalSuffix;
+            else
+                Text = f.ToString();
         }
 
         public override float Value

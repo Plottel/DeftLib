@@ -31,8 +31,6 @@ namespace DeftLib
 
         public override void HandleInput()
         {
-            if (Input.KeyDown(Microsoft.Xna.Framework.Input.Keys.Q))
-                _prototypePanel.CurrentPrototype.GetComponent<SpatialComponent>().rotation += 0.5f;
         }
 
         public override void Update(GameTime gameTime)

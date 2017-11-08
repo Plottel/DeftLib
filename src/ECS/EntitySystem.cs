@@ -10,6 +10,7 @@ namespace DeftLib
     {
         private Type[] _requiredComponents;
         protected List<Entity> _entities = new List<Entity>();
+        protected List<Entity> Entities { get => _entities; set => _entities = value; }
 
         public int EntityCount
         {
@@ -18,6 +19,9 @@ namespace DeftLib
 
         public EntitySystem(params Type[] requiredComponents)
             => _requiredComponents = requiredComponents;
+
+        public bool HasEntity(Entity e)
+            => _entities.Contains(e);
 
         public bool CanOperateOnEntity(Entity e)
         {

@@ -9,23 +9,28 @@ using MonoGame.Extended;
 
 namespace DeftLib
 {
+    public enum BtnGadgetState
+    {
+        Neutral,
+        Pressed,
+        Clicked
+    }
+
     public class Button : Gadget
     {
         public const int DEFAULT_HEIGHT = 30;
-        public const int DEFAULT_WIDTH = 200;
+        public const int DEFAULT_WIDTH = 200;        
 
-        private enum ButtonState
+        private BtnGadgetState _state;
+        protected BtnGadgetState State
         {
-            Neutral,
-            Pressed,
-            Clicked
+            get => _state;
+            set => _state = value;
         }
-
-        private ButtonState _state;
 
         public bool IsClicked
         {
-            get { return _state == ButtonState.Clicked; }
+            get { return _state == BtnGadgetState.Clicked; }
         }
 
         // Default constructor for reflection instantiation
@@ -44,7 +49,7 @@ namespace DeftLib
             this.pos = pos;
             this.size = size;
             this.label = label;
-            this._state = ButtonState.Neutral;
+            this._state = BtnGadgetState.Neutral;
         }
 
         public override void SyncGadget(object toAttach) { }
@@ -53,26 +58,26 @@ namespace DeftLib
         {
             if (Bounds.Contains(Input.MousePos))
             {
-                if (_state == ButtonState.Neutral)
+                if (_state == BtnGadgetState.Neutral)
                 {
                     if (Input.LeftMousePressed())
-                        _state = ButtonState.Pressed;
+                        _state = BtnGadgetState.Pressed;
                 }
-                else if (_state == ButtonState.Pressed)
+                else if (_state == BtnGadgetState.Pressed)
                 {
                     if (Input.LeftMouseClicked())
-                        _state = ButtonState.Clicked;
+                        _state = BtnGadgetState.Clicked;
                 }
-                else if (_state == ButtonState.Clicked)
+                else if (_state == BtnGadgetState.Clicked)
                 {
-                    _state = ButtonState.Neutral;
+                    _state = BtnGadgetState.Neutral;
                 }
             }
         }
 
         public override void Render(SpriteBatch spriteBatch)
         {
-            if (_state == ButtonState.Pressed)
+            if (_state == BtnGadgetState.Pressed)
                 spriteBatch.FillRectangle(Bounds, Color.DimGray);
             else
                 spriteBatch.FillRectangle(Bounds, Color.DarkGray);

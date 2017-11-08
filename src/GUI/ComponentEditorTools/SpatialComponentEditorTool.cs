@@ -15,13 +15,21 @@ namespace DeftLib
         {
             Neutral,
             Moving,
-            Resizing
+            Resizing,
+            Rotating
         }
 
 
         private SpatialComponent _editing;
         private Vector2[] _resizePts = new Vector2[4];
         private Rectangle[] _resizeRects = new Rectangle[4];
+        private Vector2 _rotationPt;
+        private Rectangle _rotationRect;
+        private Point HOOK_SIZE = new Point(10, 10);
+        private Point HALF_HOOK_SIZE = new Point(5, 5);
+
+        private Vector2 lengthVector;
+
         private int _selectedResizeRectIndex;
 
         private ToolState _state = ToolState.Neutral;
@@ -37,22 +45,34 @@ namespace DeftLib
                 }
                 return false;
             }
-
         }
 
         public override void Edit(Entity e)
         {
             _editing = e.GetComponent<SpatialComponent>();
 
+            // Rotation point is a Vector projected outwards from center of Entity in direction
+            // matching its rotation.
+            // Rotation is a float expressed in degrees
+            // Get a vector from an angle
+            // V.x = cos(A)
+            //V.y = sin(A)
+            double radians = MathHelper.ToRadians(_editing.rotation);
+            lengthVector = _editing.size * 1.5f;
+
+            var normRotationVector = Vector2.Normalize(new Vector2((float)Math.Cos(radians), (float)Math.Sin(radians)));
+            _rotationPt = _editing.MidVector + (normRotationVector * lengthVector);
+            _rotationRect = new Rectangle(_rotationPt.ToPoint() - HALF_HOOK_SIZE, HOOK_SIZE);
+
             _resizePts[0] = new Vector2(_editing.pos.X, _editing.pos.Y + (_editing.size.Y / 2));                    // Left
             _resizePts[1] = new Vector2(_editing.pos.X + (_editing.size.X / 2), _editing.pos.Y);                    // Top
             _resizePts[2] = new Vector2(_editing.pos.X + _editing.size.X, _editing.pos.Y + (_editing.size.Y / 2));  // Right
             _resizePts[3] = new Vector2(_editing.pos.X + (_editing.size.X / 2), _editing.pos.Y + _editing.size.Y);  // Bottom
 
-            _resizeRects[0] = new Rectangle(_resizePts[0].ToPoint(), new Point(10, 10));      // Left
-            _resizeRects[1] = new Rectangle(_resizePts[1].ToPoint(), new Point(10, 10));      // Top
-            _resizeRects[2] = new Rectangle(_resizePts[2].ToPoint(), new Point(10, 10));      // Right
-            _resizeRects[3] = new Rectangle(_resizePts[3].ToPoint(), new Point(10, 10));      // Bottom
+            _resizeRects[0] = new Rectangle(_resizePts[0].ToPoint(), HOOK_SIZE);                            // Left
+            _resizeRects[1] = new Rectangle(_resizePts[1].ToPoint(), HOOK_SIZE);                            // Top
+            _resizeRects[2] = new Rectangle(_resizePts[2].ToPoint(), HOOK_SIZE);                            // Right
+            _resizeRects[3] = new Rectangle(_resizePts[3].ToPoint(), HOOK_SIZE);                            // Bottom
 
             // Move rects to sit where they should
             for (int i = 0; i < 4; ++i)
@@ -68,15 +88,19 @@ namespace DeftLib
                     {
                         _state = ToolState.Resizing;
                         _selectedResizeRectIndex = GetSelectedResizeRectIndex();
-                    }                        
+                    }
                     else if (_editing.Bounds.Contains(Input.MousePos))
                         _state = ToolState.Moving;
+                    else if (_rotationRect.Contains(Input.MousePos))
+                        _state = ToolState.Rotating;
                 }
             }
             else if (_state == ToolState.Moving)
                 HandleMove();
             else if (_state == ToolState.Resizing)
                 HandleResize();
+            else if (_state == ToolState.Rotating)
+                HandleRotate();
 
             if (Input.LeftMouseClicked())
                 _state = ToolState.Neutral;                      
@@ -99,38 +123,59 @@ namespace DeftLib
 
             if (_selectedResizeRectIndex == 0)           // Left
             {
-                _editing.pos.X += dx;
-                _editing.size.X -= dx;
+                _editing.MoveByX(dx);
+                _editing.ResizeByX(-dx);
             }
             else if (_selectedResizeRectIndex == 1)      // Top
             {
-                _editing.pos.Y += dy;
-                _editing.size.Y -= dy;
+                _editing.MoveByY(dy);
+                _editing.ResizeByY(-dy);
             }
             else if (_selectedResizeRectIndex == 2)      // Right
             {
-                _editing.size.X += dx;
+                _editing.ResizeByX(dx);
             }
             else if (_selectedResizeRectIndex == 3)      // Bottom
             {
-                _editing.size.Y += dy;
+                _editing.ResizeByY(dy);
             }
         }
 
         private void HandleMove()
         {
             if (_editing.Bounds.Contains(Input.MousePos))
-                _editing.pos += Input.DeltaMousePos;
+                _editing.MoveBy(Input.DeltaMousePos);
+        }
+
+        private void HandleRotate()
+        { 
+            //      270
+            //  180     0/360
+            //      90
+
+            // Get vector between mouse pos and spatial.MidVector
+            // Convert that to an angle
+            // Set rotation to that angle
+            var angleVector = Vector2.Normalize(Input.MousePos - _editing.MidVector);
+            var rotation = MathHelper.ToDegrees((float)Math.Atan2(angleVector.Y, angleVector.X));
+
+            _editing.rotation = rotation;            
         }
 
         public override void RenderGUI(SpriteBatch spriteBatch)
         {
             if (_editing != null)
             {
+                // Render bounds
                 spriteBatch.DrawRectangle(_editing.Bounds.GetInflated(2, 2), TOOL_COLOR, 2);
 
+                // Render resize points
                 foreach (var rect in _resizeRects)
-                    spriteBatch.FillRectangle(rect, TOOL_COLOR);
+                    spriteBatch.FillRectangle(rect, Color.LightGoldenrodYellow);
+
+                // Render rotation line
+                spriteBatch.DrawLine(_editing.MidVector, _rotationPt, TOOL_COLOR, 2);
+                spriteBatch.FillRectangle(_rotationRect, Color.LightGoldenrodYellow);
             }
         }
     }

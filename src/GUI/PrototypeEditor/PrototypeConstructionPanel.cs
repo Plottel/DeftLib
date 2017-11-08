@@ -44,7 +44,7 @@ namespace DeftLib
             AddGadget<StringBox>("Name");
             AddGadget<StringBox>("New");
             AddGadget<Button>("Save");
-            AddGadget<Button>("Delete");
+            AddGadget<ShieldButton>("Delete");
             AddGadget<EntityPanel>("Current Prototype");
             _entityPanel = GetGadget<EntityPanel>("Current Prototype");
             _prototypePos = new Vector2(700, 300);
@@ -81,7 +81,7 @@ namespace DeftLib
                 //nameSB.SyncGadget("");
             }
 
-            if (GetGadget<Button>("Delete").IsClicked)
+            if (GetGadget<ShieldButton>("Delete").IsClicked)
             {
                 Prototypes.RemovePrototype(GetGadget<StringBox>("Name").Value);
                 ResetPrototype();
@@ -133,24 +133,26 @@ namespace DeftLib
         {
             base.Render(spriteBatch);
 
-            
-
             var prototypeBorderRect = new Rectangle((this.pos + _prototypePos - new Vector2(150, 150)).ToPoint(), new Point(350, 350));
-
-            spriteBatch.DrawRectangle(prototypeBorderRect, Color.Blue, 5);
-            spriteBatch.DrawRectangle(prototypeBorderRect.GetInflated(5, 5), Color.Blue, 3);
-            spriteBatch.DrawRectangle(prototypeBorderRect.GetInflated(10, 10), Color.Blue, 2);
 
             _toolManager.RenderGUI(spriteBatch);
 
             if (ActiveGadget == GetGadget<StringBox>("Open"))
-                Panel.RenderSideText(spriteBatch, Prototypes.AllPrototypeNames, this);
+                Panel.RenderSideText(spriteBatch, Prototypes.AllPrototypeNamesUpper, this);
             else if (ActiveGadget == GetGadget<StringBox>("New"))
                 Panel.RenderSideText(spriteBatch, AllEntityTypeNames, this);
 
             // TODO: When program is larger, "Entity.Render()" is a consideration -> can't do it without the ECS.
             if (_currentPrototype != null)
-                _currentPrototype.GetComponent<TextureRendererComponent>().Render(spriteBatch);
+            {
+                var c = _currentPrototype;
+
+                if (c.HasComponent<TextureRendererComponent>())
+                    c.GetComponent<TextureRendererComponent>().Render(spriteBatch);
+                else if (c.HasComponent<RectangleRendererComponent>())
+                    c.GetComponent<RectangleRendererComponent>().Render(spriteBatch);
+            }
+                
         }
 
         private List<string> AllEntityTypeNames

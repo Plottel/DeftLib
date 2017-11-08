@@ -113,5 +113,11 @@ namespace DeftLib
                     reader.ReadInt32()
             );
         }
+
+        public static void WriteColor(this BinaryWriter writer, Color c)
+            => writer.Write(c.PackedValue);
+
+        public static Color ReadColor(this BinaryReader reader)
+            => new Color(reader.ReadUInt32());
     }
 }

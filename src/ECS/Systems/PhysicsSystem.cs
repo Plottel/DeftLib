@@ -13,6 +13,7 @@ namespace DeftLib
             base(typeof(PhysicsComponent), typeof(SpatialComponent))
         { }
 
+        // TODO: Incorporate PhysicsComponent.Mass/Drag into physics calculations
         public override void Process()
         {
             PhysicsComponent physics;
@@ -22,32 +23,36 @@ namespace DeftLib
             {
                 physics = entity.GetComponent<PhysicsComponent>();
 
-                // Apply and decay all accelerations
-                for (int i = physics.ActiveForces.Count - 1; i >= 0; --i)
+                if (physics.canReceiveForces)
                 {
-                    physics.velocity += physics.ActiveForces[i]; // Take MASS and DELTATIME into account
+                    // Apply and decay all accelerations
+                    for (int i = physics.ActiveForces.Count - 1; i >= 0; --i)
+                    {
+                        physics.velocity += physics.ActiveForces[i] / physics.mass;
 
-                    var accelReductionVector = (physics.ActiveForces[i] * -1) * 0.9f;
-                    physics.ActiveForces[i] += accelReductionVector;
+                        var accelReductionVector = (physics.ActiveForces[i] * -1) * 0.9f;
+                        physics.ActiveForces[i] += accelReductionVector;
 
-                    // Kill acceleration if it has decayed below a threshold
-                    if (physics.ActiveForces[i].Length() < 1) // 1 == threshold - pick a new one if needed.
-                        physics.ActiveForces.RemoveAt(i);
-                }
+                        // Kill acceleration if it has decayed below a threshold
+                        if (physics.ActiveForces[i].Length() < 1) // 1 == threshold - pick a new one if needed.
+                            physics.ActiveForces.RemoveAt(i);
+                    }
 
-                if (physics.velocity != Vector2.Zero)
-                {
-                    // Reduce velocity according to drag
-                    //physics.velocity *= 1 / physics.drag; // FIX FORMULA
-                    var dragVector = physics.velocity * -1;
-                    dragVector *= 0.05f;
+                    if (physics.velocity != Vector2.Zero)
+                    {
+                        // Reduce velocity according to drag
+                        //physics.velocity *= 1 / physics.drag; // FIX FORMULA
+                        var dragVector = physics.velocity * -1;
+                        dragVector *= physics.drag;
 
-                    physics.velocity += dragVector;
+                        physics.velocity += dragVector;
+                    }
+                }               
+                    
 
-                    // Move the entity according to resultant velocity
-                    spatial = entity.GetComponent<SpatialComponent>();
-                    spatial.pos += physics.velocity;
-                }             
+                // Move the entity according to resultant velocity
+                spatial = entity.GetComponent<SpatialComponent>();
+                spatial.MoveBy(physics.velocity);         
             }
         }
     }

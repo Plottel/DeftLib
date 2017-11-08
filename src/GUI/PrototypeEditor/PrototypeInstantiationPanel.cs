@@ -29,7 +29,7 @@ namespace DeftLib
         public PrototypeInstantiationPanel(string label, Vector2 pos, Vector2 size, int layer) : 
             base(label, pos, size, layer)
         {
-            foreach (string name in Prototypes.AllPrototypeNames)
+            foreach (string name in Prototypes.AllPrototypeNamesUpper)
                 AddGadget<Button>(name);
         }
 
@@ -37,7 +37,7 @@ namespace DeftLib
         {
             base.OnGUIEvent();
 
-            foreach (string name in Prototypes.AllPrototypeNames)
+            foreach (string name in Prototypes.AllPrototypeNamesUpper)
             {
                 if (GetGadget<Button>(name).IsClicked)
                 {

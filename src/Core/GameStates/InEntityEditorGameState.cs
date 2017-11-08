@@ -39,11 +39,11 @@ namespace DeftLib
         }
 
         public override void HandleInput()
-        {
+        {  
             if (Input.KeyTyped(Keys.F1))
                 InstantiateSelectedPrototypeAtMousePos();
 
-            if (Input.KeyTyped(Keys.Delete))
+            if (Input.KeyTyped(Keys.F2))
             {
                 if (_selectedEntity != null)
                 {
@@ -62,11 +62,11 @@ namespace DeftLib
 
                     if (spatial.Bounds.Contains(Input.MousePos))
                     {
+                        if (e != _selectedEntity)
+                            _entityPanel.SetEntity(e);
                         _selectedEntity = e;
-                        _entityPanel.SetEntity(_selectedEntity);
                         break;
                     }
-
                 }
             }
 
@@ -74,13 +74,18 @@ namespace DeftLib
             if (_selectedEntity != null)
                 _toolManager.Edit(_selectedEntity, _entityPanel.SelectedComponentType);
 
+            // Sync gadget for _entityPanel.SelectedComponentType
+            if (_entityPanel.SelectedComponentType != null)
+                _entityPanel.SyncComponentPanel(_entityPanel.SelectedComponentType);            
+                      
+
             // Check for requested state transitions
             if (SceneManager.programStatePanel.GetGadget<Button>("Play Scene").IsClicked)
                 SceneManager.PushState(new InGamePlayGameState());
         }
 
         public override void Update(GameTime gameTime)
-        {
+        {            
         }
 
         public override void Render(SpriteBatch spriteBatch)

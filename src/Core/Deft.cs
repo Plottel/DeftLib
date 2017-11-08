@@ -42,7 +42,7 @@ namespace DeftLib
 
             // Restrict mouse to stay within the window.
             Input.SetMaxMouseX(graphics.PreferredBackBufferWidth);
-            Input.SetMaxMouseY(graphics.PreferredBackBufferHeight);            
+            Input.SetMaxMouseY(graphics.PreferredBackBufferHeight);
         }
 
         protected override void Initialize()
@@ -68,6 +68,7 @@ namespace DeftLib
 
             Assets.content = Content;
             Assets.LoadAssets();
+            UserSetup.Init();
         }
 
         protected override void UnloadContent()

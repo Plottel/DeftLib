@@ -14,6 +14,28 @@ namespace DeftLib
         public Vector2 size;
         public float rotation;
 
+        public void MoveBy(Vector2 amt)
+        {
+            pos += amt;
+        }
+
+        public void MoveByX(float amt)
+            => MoveBy(new Vector2(amt, 0));
+
+        public void MoveByY(float amt)
+            => MoveBy(new Vector2(0, amt));
+
+        public void ResizeBy(Vector2 amt)
+        {
+            size += amt;
+        }
+
+        public void ResizeByX(float amt)
+            => ResizeBy(new Vector2(amt, 0));
+
+        public void ResizeByY(float amt)
+            => ResizeBy(new Vector2(0, amt));
+
         public Rectangle Bounds
         {
             get { return new Rectangle(pos.ToPoint(), size.ToPoint()); }
