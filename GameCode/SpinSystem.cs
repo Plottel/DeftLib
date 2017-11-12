@@ -13,12 +13,14 @@ namespace DeftLib
         public SpinSystem()
             : base(typeof(SpinComponent), typeof(SpatialComponent))
         {
+
         }
 
         public override void Process()
         {
             SpinComponent spin;
             SpatialComponent spatial;
+
 
             // Fill in this loop with what should happen to each Entity each update.
             foreach (Entity entity in Entities)

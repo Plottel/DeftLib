@@ -25,26 +25,6 @@ namespace DeftLib
         {
             if (SceneManager.programStatePanel.GetGadget<Button>("Stop Scene").IsClicked)
                 SceneManager.PopState();
-
-            // TODO: FIX UP - SILLY TESTING
-            if (Input.KeyTyped(Keys.F))
-            {
-                var fireball = Prototypes.Create("Fireball", new Vector2(50, 50));
-                fireball.GetComponent<PhysicsComponent>().velocity = Vector2.Normalize(Input.MousePos - fireball.Spatial.pos) * 50;
-                fireball.Spatial.size += new Vector2(10, 10);
-                ECSCore.SubscribeEntity(fireball);
-            }
-
-            //if (Input.KeyTyped(Keys.P))
-            //{
-            //    foreach (var e in World.entities)
-            //    {
-            //        var physics = e.GetComponent<PhysicsComponent>();
-
-            //        if (physics != null)
-            //            physics.AddForce(new Vector2(10, 10));
-            //    }
-            //}
         }
 
         public override void Update(GameTime gameTime)
@@ -52,7 +32,7 @@ namespace DeftLib
             ECSCore.Update(gameTime);
 
             foreach (var entity in Scene.entities)
-                entity.Update(gameTime);
+                entity.OnUpdate(gameTime);
         }
 
         public override void Render(SpriteBatch spriteBatch)

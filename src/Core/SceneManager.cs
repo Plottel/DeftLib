@@ -20,18 +20,29 @@ namespace DeftLib
 
         public static Scene Scene { get => _currentScene; }
 
+        // TODO: This should be a system
+        private static List<Lifetime> _toBeDestroyed;
+        private static List<Entity> _toBeDestroyedAtEndOfFrame = new List<Entity>();
+        private static List<Entity> _toBeAddedAtEndOfFrame = new List<Entity>();
 
-        public static List<Entity> toBeDestroyed;
         public static List<Gadget> gadgets;
         public static ProgramStatePanel programStatePanel;
         private static Stack<GameState> _gameStates;
 
+        private static GameTime _gameTime;
+
         public static TileGrid tileGrid;
+
+        private struct Lifetime
+        {
+            public Entity entity;
+            public double lifetime;
+        }
 
         public static void Init()
         {
             scenes = new List<Scene>();
-            toBeDestroyed = new List<Entity>();
+            _toBeDestroyed = new List<Lifetime>();
             gadgets = new List<Gadget>();
             _gameStates = new Stack<GameState>();
             tileGrid = new TileGrid(new Vector2(0, 0), 45, 23);
@@ -57,14 +68,20 @@ namespace DeftLib
 
         public static void AddEntity(Entity e)
         {
-            _currentScene.entities.Add(e);
-            ECSCore.SubscribeEntity(e);
+            _toBeAddedAtEndOfFrame.Add(e);
         }
 
-        public static void RemoveEntity(Entity e)
+        public static void RemoveEntity(Entity e, float secondsDelay=0f)
         {
-            _currentScene.entities.Remove(e);
-            ECSCore.UnsubscribeEntity(e);
+            if (secondsDelay == 0f)
+            {
+                _toBeDestroyedAtEndOfFrame.Add(e);
+                ECSCore.UnsubscribeEntity(e);
+
+            }
+            else
+                _toBeDestroyed.Add(new Lifetime {lifetime=_gameTime.TotalGameTime.TotalSeconds + secondsDelay, entity=e });
+            
         }
 
         public static void AddScene(Scene scene)
@@ -192,22 +209,48 @@ namespace DeftLib
 
         public static void Update(GameTime gameTime)
         {
+            _gameTime = gameTime;
+
             CurrentGameState.Update(gameTime);
 
             // At the end of each tick, process all destruction requests.
 
-            // TODO: Reincorporate destruction requests
-            //foreach (var e in toBeDestroyed)
-              //  Scene.entities.Remove(e);
+            _toBeDestroyed = _toBeDestroyed.OrderByDescending(life => life.lifetime).ToList();
 
-            toBeDestroyed.Clear();
+            for (int i = _toBeDestroyed.Count - 1; i >= 0; --i)
+            {
+                var lifetime = _toBeDestroyed[i];
+
+                if (_gameTime.TotalGameTime.TotalSeconds >= lifetime.lifetime)
+                {
+                    RemoveEntity(lifetime.entity);
+                    _toBeDestroyed.RemoveAt(i);
+                }
+                else
+                    break;
+            }
+
+            foreach (var e in _toBeDestroyedAtEndOfFrame)
+            {
+                ECSCore.UnsubscribeEntity(e);
+            }
+
+            _toBeDestroyedAtEndOfFrame.Clear();
+
+
+            foreach (var e in _toBeAddedAtEndOfFrame)
+            {
+                _currentScene.entities.Add(e);
+                ECSCore.SubscribeEntity(e);
+            }
+            _toBeAddedAtEndOfFrame.Clear();
         }
 
         public static void Render(SpriteBatch spriteBatch)
         {
-            ECSCore.Render(spriteBatch);
-            CurrentGameState.Render(spriteBatch);
             Scene.Render(spriteBatch);
+            CurrentGameState.Render(spriteBatch);
+            ECSCore.Render(spriteBatch);
             Scene.RenderGUI(spriteBatch);
             programStatePanel.Render(spriteBatch);
             CurrentGameState.RenderGUI(spriteBatch);

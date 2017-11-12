@@ -19,6 +19,7 @@ namespace DeftLib
         public ColorPanel(int layer) :
             this("", Vector2.Zero, new Vector2(IntBox.DEFAULT_WIDTH + 30, IntBox.DEFAULT_HEIGHT * 2 + PADDING_BETWEEN_GADGETS), layer)
         {
+            
         }
 
         public ColorPanel(string label, Vector2 pos, Vector2 size, int layer) : 

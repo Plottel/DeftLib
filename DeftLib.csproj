@@ -44,16 +44,23 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="GameCode\ComponentEditorToolTemplate.cs" />
+    <Compile Include="GameCode\FieldPanelTemplate.cs" />
+    <Compile Include="GameCode\Bullet.cs" />
+    <Compile Include="GameCode\EntityTemplate.cs" />
     <Compile Include="GameCode\ComponentTemplate.cs" />
+    <Compile Include="GameCode\Player.cs" />
     <Compile Include="GameCode\SpinComponent.cs" />
     <Compile Include="GameCode\SpinSystem.cs" />
+    <Compile Include="GameCode\SpatialComponent3D.cs" />
+    <Compile Include="GameCode\TeleportComponentEditorTool.cs" />
+    <Compile Include="GameCode\Vector3Panel.cs" />
     <Compile Include="src\GUI\FieldGadgets\ByteBox.cs" />
     <Compile Include="src\GUI\FieldGadgets\ColorPanel.cs" />
     <Compile Include="src\ECS\Systems\RectangleRenderingSystem.cs" />
     <Compile Include="src\ECS\Components\RectangleRendererComponent.cs" />
     <Compile Include="src\GUI\ShieldButton.cs" />
     <Compile Include="src\GUI\FieldGadgets\BoolBox.cs" />
-    <Compile Include="GameCode\Player.cs" />
     <Compile Include="src\Core\Scene.cs" />
     <Compile Include="src\Utils\Assets.cs" />
     <Compile Include="src\GUI\ComponentEditorTools\CollisionComponentEditorTool.cs" />
@@ -62,7 +69,6 @@
     <Compile Include="src\GUI\ComponentEditorTools\ComponentEditorToolManager.cs" />
     <Compile Include="src\Core\ECSCore.cs" />
     <Compile Include="src\ECS\EntitySystem.cs" />
-    <Compile Include="GameCode\Fireball.cs" />
     <Compile Include="src\Core\GameStates\GameState.cs" />
     <Compile Include="src\DataStructures\Grid.cs" />
     <Compile Include="src\GUI\Button.cs" />
@@ -115,6 +121,8 @@
     <Compile Include="src\ECS\Systems\TextureRenderingSystem.cs" />
     <Compile Include="GameCode\UserSetup.cs" />
     <Compile Include="GameCode\SystemTemplate.cs" />
+    <Compile Include="GameCode\Wall.cs" />
+    <Compile Include="TeleportComponent.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />

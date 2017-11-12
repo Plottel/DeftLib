@@ -60,6 +60,28 @@ namespace DeftLib
             return this[col, row];
         }
 
+        /// <summary>
+        /// Returns a list of cells the passed in Rectangle touches.
+        /// </summary>
+        public List<Tile> TilesInRect (Rectangle rect)
+        {
+            List<Tile> result = new List<Tile>();
+
+            Point min = IndexAt(new Vector2(rect.Left, rect.Top));
+            Point max = IndexAt(new Vector2(rect.Right, rect.Bottom));
+
+            for (int col = min.Col(); col <= max.Col(); col++)
+            {
+                for (int row = min.Row(); row <= max.Row(); row++)
+                {
+                    AddTileToCollectionIfNotNull(this[col, row], result);
+                }
+            }
+
+            return result;
+        }
+
+
         public List<Tile> GetSquareNeighboursAroundTile(Tile tile)
         {
             var idx = IndexAt(tile.pos);

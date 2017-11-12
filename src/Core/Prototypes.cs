@@ -26,6 +26,7 @@ namespace DeftLib
                 Entity e = _prototypes[prototypeName.ToLower()].Copy();
                 e.Spatial.pos = Vector2.Zero;
                 e.Spatial.MoveBy(pos); // Move to proposed location, updating hit box.
+                e.OnCreate(); // TODO: This will run regardless of whether scene is playing. Good for runtime instantiation. BAD for Entities starting in the scene.
                 SceneManager.AddEntity(e);
 
                 return e;
@@ -50,9 +51,6 @@ namespace DeftLib
 
             throw new Exception("Prototype with name : " + prototypeName + " : not found");
         }
-
-        public static void Destroy(Entity toDestroy)
-            => SceneManager.toBeDestroyed.Add(toDestroy);
 
         public static void AddPrototype(string prototypeName, Entity prototype)
         {

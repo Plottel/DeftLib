@@ -235,8 +235,6 @@ namespace DeftLib
 
             spriteBatch.Draw(_gadgetTexture, this.pos + _gadgetTexturePos, Color.White);
 
-            bool allTexturesNull = true;
-
             foreach (var tileMap in _activeTileMap)
             {
                 TileNeighbourDirection dir = tileMap.Key;
@@ -245,8 +243,6 @@ namespace DeftLib
                 if (t.srcTexture != null)
                     spriteBatch.Draw(t.srcTexture, _dragNDropGadgets[dir].Bounds, t.srcTextureRegion, Color.White);
             }
-
-            spriteBatch.DrawString(Deft.Font16, "ALl Txtures Null : " + allTexturesNull.ToString(), new Vector2(400, 600), Color.Black);
 
             if (ActiveGadget == GetGadget<StringBox>("Open"))
                 RenderSideText(spriteBatch, Assets.AllTileMapNames, this);

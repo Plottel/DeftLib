@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
 
 namespace DeftLib
 {
@@ -11,6 +12,14 @@ namespace DeftLib
     {
         GraphicsDeviceManager graphics;
         public SpriteBatch spriteBatch;
+
+        private static Random _rand = new Random();
+
+        public static int RandInt(int min, int max)
+            => _rand.Next(min, max);
+
+        public static byte RandByte(byte min, byte max)
+            => (byte)_rand.Next(min, max);
 
         private static Deft _instance;
 
@@ -78,6 +87,7 @@ namespace DeftLib
 
         protected override void Update(GameTime gameTime)
         {
+
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 

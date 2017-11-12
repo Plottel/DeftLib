@@ -39,7 +39,7 @@ namespace DeftLib
         }
 
         public override void HandleInput()
-        {  
+        {
             if (Input.KeyTyped(Keys.F1))
                 InstantiateSelectedPrototypeAtMousePos();
 

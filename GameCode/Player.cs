@@ -8,22 +8,15 @@ using Microsoft.Xna.Framework.Input;
 
 namespace DeftLib
 {
-    //public class Player : Entity
-    //{
-    //    float speed = 0.8f;
+    public class Player : Entity
+    {
+        public override void OnUpdate(GameTime gameTime)
+        {
+            base.OnUpdate(gameTime);
 
-    //    public override void Update(GameTime gameTime)
-    //    {
-    //        var physics = GetComponent<PhysicsComponent>();
-
-    //        if (Input.KeyDown(Keys.W))
-    //            physics.AddForce(new Vector2(0, -speed));
-    //        if (Input.KeyDown(Keys.A))
-    //            physics.AddForce(new Vector2(-speed, 0));
-    //        if (Input.KeyDown(Keys.S))
-    //            physics.AddForce(new Vector2(0, speed));
-    //        if (Input.KeyDown(Keys.D))
-    //            physics.AddForce(new Vector2(speed, 0));
-    //    }
-    //}
+            if (Input.KeyTyped(Keys.Space))
+                SceneManager.ChangeScene("SCENETWO");
+        
+        }
+    }
 }

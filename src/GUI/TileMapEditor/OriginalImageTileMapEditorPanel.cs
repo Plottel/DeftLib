@@ -133,9 +133,7 @@ namespace DeftLib
 
             // Render tile bounds
             foreach (var tile in _tiles)
-                spriteBatch.DrawRectangle(tile.Bounds, Color.Black, 1);
-
-            spriteBatch.DrawString(Deft.Font16, "Num Original Images" + _allOriginalTileMapNames.Count, new Vector2(500, 100), Color.Black);      
+                spriteBatch.DrawRectangle(tile.Bounds, Color.Black, 1);     
 
             if (ActiveGadget == GetGadget<StringBox>("Open"))
                 RenderSideText(spriteBatch, _allOriginalTileMapNames, this);

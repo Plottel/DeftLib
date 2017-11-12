@@ -31,12 +31,6 @@ namespace DeftLib
             AssociateGadgetType<Rectangle, RectanglePanel>();
             AssociateGadgetType<Texture2D, TextureInputBox>();
             AssociateGadgetType<Color, ColorPanel>();
-
-            //gadgetTypeMap[typeof(int)] = typeof(IntBox);
-            //gadgetTypeMap[typeof(float)] = typeof(FloatBox);
-            //gadgetTypeMap[typeof(Color)] = typeof(ColorPanel);
-            //gadgetTypeMap[typeof(Vector2)] = typeof(VectorPanel);
-            //gadgetTypeMap[typeof(Rectangle)] = typeof(RectanglePanel);
         }
 
         public static void AssociateGadgetType<DataType, GadgetType>() where GadgetType : Gadget

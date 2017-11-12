@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Xna.Framework;
 
 namespace DeftLib
 {
@@ -10,9 +11,8 @@ namespace DeftLib
     {
         public static void Init()
         {
-            // Subscribe any custom Entity Systems here
-            // call ECSCore.SubscribeSystem(systemObject)
-            ECSCore.SubscribeSystem(new SpinSystem());
+            // ComponentEditorToolManager.AssociateToolType<ComponentType, ToolType>();
+            ComponentEditorToolManager.AssociateToolType<TeleportComponent, TeleportComponentEditorTool>();
         }
     }
 }

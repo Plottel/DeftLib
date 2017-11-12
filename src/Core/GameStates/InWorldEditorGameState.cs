@@ -5,14 +5,27 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using MonoGame.Extended;
 
 namespace DeftLib
 {
     public class InWorldEditorGameState : GameState
     {
+        private enum ActionState
+        {
+            Painting,
+            Deleting,
+            None
+        }
+
         private WorldEditorTileMapPanel _tilePanel;
 
         private Tile _tileMapToPlace;
+
+        private bool _isBoxSelecting;
+        private Rectangle _selectBox;
+
+        private ActionState _state = ActionState.None;
 
         public InWorldEditorGameState()
         {
@@ -74,18 +87,66 @@ namespace DeftLib
         //
         public override void HandleInput()
         {
-            if (_tilePanel.Bounds.Contains(Input.MousePos))
+            if (Input.KeyTyped(Microsoft.Xna.Framework.Input.Keys.LeftControl))
             {
-                if (Input.LeftMouseClicked())
-                    _tileMapToPlace = _tilePanel.TileAtMousePos;
+                _isBoxSelecting = true;
             }
-            else if (Input.LeftMouseDown())
+
+            if (Input.LeftMousePressed())
+                _state = ActionState.Painting;
+            else if (Input.RightMousePressed())
+                _state = ActionState.Deleting;
+
+            if (Input.LeftMousePressed() || Input.RightMousePressed())
+                _selectBox = new Rectangle(Input.MouseX, Input.MouseY, 0, 0);
+
+            // Handle Box Select input
+            if (_isBoxSelecting)
             {
-                if (_tileMapToPlace != null)
-                    UpdateLocalTileMaps(Scene.tileGrid.TileAt(Input.MousePos), _tileMapToPlace.srcTexture);
+                if (Input.LeftMouseDown() || Input.RightMouseDown())
+                    _selectBox.Size += Input.DeltaMousePos.ToPoint();
+                else if (Input.LeftMouseClicked() || Input.RightMouseClicked())
+                {
+                    if (_tileMapToPlace != null)
+                    {
+                        var tilesInSelectBox = Scene.tileGrid.TilesInRect(_selectBox);
+
+                        if (_state == ActionState.Painting)
+                        {
+                            // Paint in the rect
+                            foreach (var t in tilesInSelectBox)
+                                UpdateLocalTileMaps(t, _tileMapToPlace.srcTexture);
+                        }
+                        else if (_state == ActionState.Deleting)
+                        {
+                            // Delete in the rect
+                            foreach (var t in tilesInSelectBox)
+                                UpdateLocalTileMaps(t, null);
+                        }
+                    }                    
+
+                    // Action finished, reset state
+                    _state = ActionState.None;
+                    _isBoxSelecting = false;
+                    _selectBox = Rectangle.Empty;
+                }
             }
-            else if (Input.RightMouseDown())
-                UpdateLocalTileMaps(Scene.tileGrid.TileAt(Input.MousePos), null);
+            // Handle NON box select input
+            else
+            {
+                if (_tilePanel.Bounds.Contains(Input.MousePos))
+                {
+                    if (Input.LeftMouseClicked())
+                        _tileMapToPlace = _tilePanel.TileAtMousePos;
+                }
+                else if (Input.LeftMouseDown())
+                {
+                    if (_tileMapToPlace != null)
+                        UpdateLocalTileMaps(Scene.tileGrid.TileAt(Input.MousePos), _tileMapToPlace.srcTexture);
+                }
+                else if (Input.RightMouseDown())
+                    UpdateLocalTileMaps(Scene.tileGrid.TileAt(Input.MousePos), null);
+            }            
         }
 
         private void UpdateLocalTileMaps(Tile changed, Texture2D newTexture)
@@ -109,6 +170,9 @@ namespace DeftLib
         public override void RenderGUI(SpriteBatch spriteBatch)
         {
             _tilePanel.Render(spriteBatch);
+
+            if (_isBoxSelecting)
+                spriteBatch.DrawRectangle(_selectBox, ComponentEditorTool.TOOL_COLOR, 2);
         }
     }
 }

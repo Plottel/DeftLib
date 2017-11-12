@@ -55,6 +55,7 @@ namespace DeftLib
                                  from assemblyType in domainAssembly.GetTypes()
                                  where typeof(Entity).IsAssignableFrom(assemblyType)
                                  select assemblyType).ToList();
+            _allEntityTypes.Remove(typeof(EntityTemplate));
         }
 
         public override void OnGUIEvent()

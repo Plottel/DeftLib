@@ -30,12 +30,18 @@ namespace DeftLib
                 // Get vector this.Mid -> that.Mid
                 // Apply force to that based on this.Velocity and MASS // TODO: Add mass.
                 var forceDirection = Vector2.Normalize(collidedWith.Spatial.MidVector - this.Spatial.MidVector);
-                thatPhysics.AddForce(forceDirection * thisPhysics.velocity * thisPhysics.mass); // F = MV (mass * velocity)
+                var force = forceDirection * thisPhysics.mass;
+
+                if (thisPhysics.velocity != Vector2.Zero)
+                    force *= thisPhysics.velocity;
+
+                thatPhysics.AddForce(force); // F = MV (mass * velocity)
             }
         }
 
-
-        public virtual void Update(GameTime gameTime) { }
+        // TODO: This does nothing. Never called.W
+        public virtual void OnCreate() { }
+        public virtual void OnUpdate(GameTime gameTime) { }
 
 
         #endregion Entity User Definable Methods
