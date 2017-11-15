@@ -13,7 +13,6 @@ namespace DeftLib
             base(typeof(PhysicsComponent), typeof(SpatialComponent))
         { }
 
-        // TODO: Incorporate PhysicsComponent.Mass/Drag into physics calculations
         public override void Process()
         {
             PhysicsComponent physics;

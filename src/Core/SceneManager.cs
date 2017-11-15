@@ -66,6 +66,19 @@ namespace DeftLib
             }
         }
 
+        public static T GetEntity<T>() where T : Entity
+        {
+            if (_currentScene != null)
+            {
+                foreach (var e in _currentScene.entities)
+                {
+                    if (e.Is<T>())
+                        return (T)e;
+                }
+            }
+            return default(T);
+        }
+
         public static void AddEntity(Entity e)
         {
             _toBeAddedAtEndOfFrame.Add(e);

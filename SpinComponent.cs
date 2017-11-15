@@ -17,7 +17,6 @@ namespace DeftLib
         public override void Serialize(BinaryWriter writer)
         {
             writer.Write(rotationAmount);
-
         }
 
         // Populate component with values read from a binary file.

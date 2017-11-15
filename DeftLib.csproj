@@ -44,17 +44,18 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Enemy.cs" />
+    <Compile Include="Fireball.cs" />
     <Compile Include="GameCode\ComponentEditorToolTemplate.cs" />
     <Compile Include="GameCode\FieldPanelTemplate.cs" />
-    <Compile Include="GameCode\Bullet.cs" />
     <Compile Include="GameCode\EntityTemplate.cs" />
     <Compile Include="GameCode\ComponentTemplate.cs" />
-    <Compile Include="GameCode\Player.cs" />
-    <Compile Include="GameCode\SpinComponent.cs" />
-    <Compile Include="GameCode\SpinSystem.cs" />
     <Compile Include="GameCode\SpatialComponent3D.cs" />
     <Compile Include="GameCode\TeleportComponentEditorTool.cs" />
     <Compile Include="GameCode\Vector3Panel.cs" />
+    <Compile Include="Player.cs" />
+    <Compile Include="SpinComponent.cs" />
+    <Compile Include="SpinSystem.cs" />
     <Compile Include="src\GUI\FieldGadgets\ByteBox.cs" />
     <Compile Include="src\GUI\FieldGadgets\ColorPanel.cs" />
     <Compile Include="src\ECS\Systems\RectangleRenderingSystem.cs" />
@@ -121,7 +122,6 @@
     <Compile Include="src\ECS\Systems\TextureRenderingSystem.cs" />
     <Compile Include="GameCode\UserSetup.cs" />
     <Compile Include="GameCode\SystemTemplate.cs" />
-    <Compile Include="GameCode\Wall.cs" />
     <Compile Include="TeleportComponent.cs" />
   </ItemGroup>
   <ItemGroup>

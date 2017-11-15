@@ -12,7 +12,7 @@ namespace DeftLib
         public static void Init()
         {
             // ComponentEditorToolManager.AssociateToolType<ComponentType, ToolType>();
-            ComponentEditorToolManager.AssociateToolType<TeleportComponent, TeleportComponentEditorTool>();
+            ECSCore.SubscribeSystem(new SpinSystem());
         }
     }
 }

@@ -55,3 +55,4 @@ C:\Users\User\Desktop\DeftLib\DeftTesting\bin\Debug\SharpDX.Direct3D9.xml
 C:\Users\User\Desktop\DeftLib\DeftTesting\bin\Debug\Content\Textures\DefaultTexture.xnb
 C:\Users\User\Desktop\DeftLib\DeftTesting\bin\Debug\Content\Textures\Fireball.xnb
 C:\Users\User\Desktop\DeftLib\DeftTesting\bin\Debug\Scenes\scenes.txt
+C:\Users\User\Desktop\DeftLib\DeftTesting\bin\Debug\Content\Textures\Player.xnb

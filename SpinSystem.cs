@@ -18,15 +18,14 @@ namespace DeftLib
 
         public override void Process()
         {
-            SpinComponent spin;
             SpatialComponent spatial;
-
+            SpinComponent spin;
 
             // Fill in this loop with what should happen to each Entity each update.
             foreach (Entity entity in Entities)
             {
-                spin = entity.GetComponent<SpinComponent>();
                 spatial = entity.Spatial;
+                spin = entity.GetComponent<SpinComponent>();
 
                 spatial.rotation += spin.rotationAmount;
             }

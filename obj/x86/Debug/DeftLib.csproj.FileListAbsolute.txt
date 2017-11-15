@@ -118,6 +118,7 @@ C:\Users\User\Desktop\DeftLib\bin\Windows\x86\Debug\Mono.Cecil.Rocks.dll
 C:\Users\User\Desktop\DeftLib\bin\Windows\x86\Debug\nunit.framework.dll
 C:\Users\User\Desktop\DeftLib\bin\Windows\x86\Debug\nunit.framework.xml
 C:\Users\User\Desktop\DeftLib\bin\Windows\x86\Debug\Content\Textures\DefaultTexture.xnb
-C:\Users\User\Desktop\DeftLib\bin\Windows\x86\Debug\Content\Textures\Fireball.xnb
 C:\Users\User\Desktop\DeftLib\bin\Windows\x86\Debug\Scenes\scenes.txt
 C:\Users\User\Desktop\DeftLib\obj\x86\Debug\DeftLib.csprojResolveAssemblyReference.cache
+C:\Users\User\Desktop\DeftLib\bin\Windows\x86\Debug\Content\Textures\Fireball.xnb
+C:\Users\User\Desktop\DeftLib\bin\Windows\x86\Debug\Content\Textures\Player.xnb

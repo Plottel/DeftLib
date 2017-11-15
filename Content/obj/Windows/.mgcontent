@@ -11,10 +11,11 @@
     <File>C:/Users/User/Desktop/DeftLib/Content/font_14.spritefont</File>
     <File>C:/Users/User/Desktop/DeftLib/Content/font_16.spritefont</File>
     <File>C:/Users/User/Desktop/DeftLib/Content/TileMapDragAndDropGadgets.png</File>
-    <File>C:/Users/User/Desktop/DeftLib/Content/TileMaps/DirtTileMap.png</File>
-    <File>C:/Users/User/Desktop/DeftLib/Content/TileMaps/WaterTileMap.png</File>
     <File>C:/Users/User/Desktop/DeftLib/Content/TileMaps/MossyPathTileMap.png</File>
     <File>C:/Users/User/Desktop/DeftLib/Content/Textures/DefaultTexture.png</File>
     <File>C:/Users/User/Desktop/DeftLib/Content/Textures/Fireball.png</File>
+    <File>C:/Users/User/Desktop/DeftLib/Content/Textures/Player.png</File>
+    <File>C:/Users/User/Desktop/DeftLib/Content/TileMaps/DirtTileMap.png</File>
+    <File>C:/Users/User/Desktop/DeftLib/Content/TileMaps/WaterTileMap.png</File>
   </SourceFiles>
 </SourceFileCollection>

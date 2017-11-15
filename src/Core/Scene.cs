@@ -9,7 +9,6 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace DeftLib
 {
-    // NOTE: Not sure what is rendering Tile Grid - IF ANYTHING
     public class Scene
     {
         public string Name;
