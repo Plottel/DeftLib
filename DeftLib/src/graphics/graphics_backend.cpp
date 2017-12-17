@@ -22,6 +22,7 @@ namespace deft
 			{
 				SDL_Init(SDL_INIT_EVERYTHING);
 				TTF_Init();
+				//IMG_Init();
 
 				std::cout << SDL_GetError() << std::endl;
 
@@ -39,7 +40,7 @@ namespace deft
 				(
 					window,
 					-1,
-					SDL_RENDERER_ACCELERATED
+					SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC
 				);
 
 				font_10 = TTF_OpenFont("resources/Calibri.ttf", 10);

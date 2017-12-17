@@ -5,7 +5,7 @@
 
 namespace deft
 {
-	typedef enum
+	typedef enum Key
 	{
 		UNKNOWN = 0,
 		FIRST = 0,

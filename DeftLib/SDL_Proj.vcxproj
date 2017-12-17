@@ -246,6 +246,7 @@
     <ClInclude Include="src\graphics\color.h" />
     <ClInclude Include="src\graphics\graphics.h" />
     <ClInclude Include="src\graphics\graphics_backend.h" />
+    <ClInclude Include="src\graphics\texture.h" />
     <ClInclude Include="src\gui\gadget.h" />
     <ClInclude Include="src\gui\gadget_types.h" />
     <ClInclude Include="src\gui\gui.h" />
@@ -353,6 +354,9 @@
     <Library Include="SDL2\lib\x86\SDL2_image.lib" />
     <Library Include="SDL2\lib\x86\SDL2_mixer.lib" />
     <Library Include="SDL2\lib\x86\SDL2_ttf.lib" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="resources\star_jump.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -13,7 +13,6 @@ namespace deft
 			const int SDL_KEY_COUNT = 322;
 			const int MOUSE_BUTTON_COUNT = 2;
 
-			SDL_Event e;
 			bool _down_keys[SDL_KEY_COUNT];
 			bool _typed_keys[SDL_KEY_COUNT];
 			bool _released_keys[SDL_KEY_COUNT];
@@ -25,6 +24,7 @@ namespace deft
 			int _mouse_x = 0;
 			int _mouse_y = 0;
 
+			SDL_Event e;
 			std::vector<InputEvent> _new_input_events;
 		}		
 
@@ -206,8 +206,7 @@ namespace deft
 		bool key_down(Key key)
 		{
 			return _down_keys[key];
-		}
-		
+		}		
 
 		bool key_typed(Key key)
 		{

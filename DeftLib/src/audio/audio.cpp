@@ -19,7 +19,17 @@ namespace deft
 
 		void init()
 		{
-			Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048);		
+			Mix_OpenAudio(
+				44100,					// Frequency
+				MIX_DEFAULT_FORMAT,		// Output format
+				2,						// Channels - 2 = stereo, 1 = mono
+				2048);					// Chunksize (sound quality)
+		}
+
+		void play_music(const string& name)
+		{
+			Mix_PlayMusic(backend::musics[name], -1);
+			backend::_is_playing_music = true;
 		}
 
 		void play_sound(const string& name)
@@ -29,7 +39,7 @@ namespace deft
 
 		void loop_sound(const string& name, int count)
 		{
-			Mix_PlayChannel(-1, backend::sounds[name], count - 1); // SDL loops for one extra?
+			Mix_PlayChannel(-1, backend::sounds[name], count - 1);
 		}
 
 		void load_sound(const string& name, const string& path)
@@ -40,13 +50,7 @@ namespace deft
 		void load_music(const string& name, const string& path)
 		{
 			backend::musics[name] = Mix_LoadMUS(path.c_str());
-		}
-
-		void play_music(const string& name)
-		{
-			Mix_PlayMusic(backend::musics[name], -1);
-			backend::_is_playing_music = true;
-		}
+		}		
 
 		void pause_music()
 		{
@@ -70,8 +74,7 @@ namespace deft
 
 		void stop_music()
 		{
-			// If music is playing
-			if (Mix_PlayingMusic() > 0)
+			if (backend::_is_playing_music)
 			{
 				Mix_HaltMusic();
 				backend::_is_playing_music = false;

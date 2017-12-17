@@ -40,7 +40,9 @@ namespace deft
 
 		static bool circles_collide(Circle c1, Circle c2)
 		{
-			return fabs((c1.x - c2.x) * (c1.x - c2.x) + (c1.y - c2.y) * (c1.y - c2.y)) <
+			return fabs(
+				(c1.x - c2.x) * (c1.x - c2.x) +  (c1.y - c2.y) * (c1.y - c2.y)) 
+				<
 				(c1.radius + c2.radius) * (c1.radius + c2.radius);
 		}
 
